@@ -1,0 +1,24 @@
+{
+  "name": "songbai-cinema",
+  "version": "0.6.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test tests/*.test.mjs",
+    "db:local": "wrangler d1 migrations apply songbai-db --local",
+    "db:remote": "wrangler d1 migrations apply songbai-db --remote",
+    "db:set": "node scripts/set-d1-id.mjs",
+    "test:e2e": "playwright test",
+    "test:live": "node scripts/check-live.mjs",
+    "check:feeds": "node scripts/check-feeds.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "wrangler": "4.107.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

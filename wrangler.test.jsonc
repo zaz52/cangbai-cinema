@@ -1,0 +1,12 @@
+{
+  "name": "songbai-cinema-local-test",
+  "main": "tests/fixture-worker.js",
+  "compatibility_date": "2026-04-01",
+  "assets": {"directory":"./public","binding":"ASSETS","run_worker_first":["/api/*"],"not_found_handling":"404-page"},
+  "d1_databases": [{"binding":"DB","database_name":"songbai-test-db","database_id":"00000000-0000-4000-8000-000000000001","migrations_dir":"migrations"}],
+  "vars": {
+    "ADMIN_PASSWORD":"local-fixture-password-only",
+    "ADMIN_SESSION_SECRET":"local-fixture-signature-never-for-production-12345",
+    "COPYRIGHT_CONTACT_EMAIL":"fixture@example.org"
+  }
+}

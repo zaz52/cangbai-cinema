@@ -1,0 +1,4 @@
+# Copy to .dev.vars for LOCAL DEVELOPMENT only. Never publish real values.
+ADMIN_PASSWORD="replace-with-a-strong-password-12plus"
+ADMIN_SESSION_SECRET="replace-with-an-independent-random-secret-at-least-32-characters"
+COPYRIGHT_CONTACT_EMAIL="copyright@example.org"

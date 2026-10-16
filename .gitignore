@@ -1,0 +1,24 @@
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+*.log
+.DS_Store
+__pycache__/
+
+!.dev.vars.example
+!.env.example
+reports/
+test-results/
+playwright-report/
+
+# Local credentials and packaged deliverables
+*.pem
+*.key
+*.p12
+*.pfx
+*.zip
+管理员登录信息*.txt
+源码包校验.txt

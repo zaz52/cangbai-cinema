@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0e15" />
+  <meta name="description" content="苍柏 CINEMA 版权说明、非营利声明及侵权投诉与删除流程。" />
+  <title>版权声明与侵权投诉 · 苍柏 CINEMA</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./cinema.css" />
+</head>
+<body>
+<div class="legal-shell">
+  <nav class="legal-nav" aria-label="返回网站"><a href="./index.html"><span class="arrow-back" aria-hidden="true">←</span>苍柏 CINEMA</a></nav>
+  <main class="legal-page">
+    <div class="legal-eyebrow">COPYRIGHT &amp; TAKEDOWN</div>
+    <h1>版权声明与侵权投诉</h1>
+    <p class="legal-intro">「苍柏 CINEMA」是个人维护的非营利影视检索与播放界面项目。我们尊重创作者、制片方、发行方及其他权利人的合法权益，也重视每一项具体的投诉与更正请求。</p>
+
+    <section class="legal-section" aria-labelledby="scope">
+      <h2 id="scope">内容与服务说明</h2>
+      <p>本站提供影视信息整理、站点目录、符合使用条件的媒体检索及浏览器播放功能。部分信息和视频链接可能来自独立第三方服务，视频文件通常由浏览器直接连接来源提供方。第三方内容的著作权及使用权限应以相应权利人和服务协议为准。</p>
+      <p>本站不出售影视会员，不以播放影视内容收费，也不主张拥有第三方作品的版权。<strong>非营利性质本身不代表取得影视作品的转载、传播或播放授权。</strong></p>
+    </section>
+
+    <section class="legal-section" aria-labelledby="report">
+      <h2 id="report">如您认为某项内容或链接涉及侵权</h2>
+      <p>请通过下方联系邮箱提交通知，并尽量提供以下信息，以便准确定位和核查：</p>
+      <ol>
+        <li>权利人或授权代表的姓名／机构名称及可回复的联系方式。</li>
+        <li>需要处理的作品名称，以及本站具体页面、搜索结果或播放线路链接。</li>
+        <li>您拥有相关权利或有权提出投诉的说明及必要证明材料。</li>
+        <li>您认为涉嫌侵权的具体情况和希望采取的处理方式。</li>
+      </ol>
+      <div class="legal-contact" id="copyrightContact" data-configured="false" role="status" aria-live="polite">
+        <div><strong id="contactTitle">正在读取联系邮箱…</strong><small id="contactSubtitle">如无法显示，请稍后刷新。</small></div>
+        <span id="contactAction"></span>
+      </div>
+      <p class="legal-note">核实后，我们将视情况尽快移除、屏蔽相关条目或断开对应播放链接，并处理重复侵权的来源。处理进度和结果会通过您提供的联系方式沟通。请勿提交与投诉无关的敏感个人资料。</p>
+    </section>
+
+    <section class="legal-section" aria-labelledby="mistakes">
+      <h2 id="mistakes">错误信息与来源更正</h2>
+      <p>如果您发现失效链接、错误署名、误标版权信息或不合适的来源，也欢迎使用同一联系方式反馈。本站将根据实际情况修正或下架。</p>
+    </section>
+  </main>
+  <footer class="legal-foot">© 2026 CANGBAI CINEMA · 个人非营利项目 · <a href="./index.html">返回首页</a></footer>
+</div>
+<script>
+(async()=>{
+  const wrap=document.getElementById('copyrightContact');
+  const title=document.getElementById('contactTitle');
+  const subtitle=document.getElementById('contactSubtitle');
+  const action=document.getElementById('contactAction');
+  try {
+    const response=await fetch('/api/site-config',{cache:'no-store'});
+    if(!response.ok)throw new Error('配置未就绪');
+    const {copyrightContactEmail}=await response.json();
+    if(typeof copyrightContactEmail==='string'&&/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(copyrightContactEmail)){
+      wrap.dataset.configured='true';
+      title.textContent=copyrightContactEmail;
+      subtitle.textContent='请发送作品信息、涉及页面及相关权利证明';
+      const link=document.createElement('a');
+      link.href='mailto:'+copyrightContactEmail+'?subject='+encodeURIComponent('苍柏 CINEMA · 版权投诉与删除申请');
+      link.textContent='发送邮件';
+      action.replaceChildren(link);
+      return;
+    }
+  }catch(error){}
+  title.textContent='站长尚未配置接收投诉的联系邮箱';
+  subtitle.textContent='网站正式公开前须在 Cloudflare Worker 配置 COPYRIGHT_CONTACT_EMAIL，确保投诉渠道可用。';
+  action.textContent='暂不可用';
+})()
+</script>
+</body>
+</html>

@@ -1,0 +1,904 @@
+{
+  "year": 2026,
+  "updatedAt": "2026-10-15T20:31:14.079Z",
+  "movie": [
+    {
+      "id": "319558",
+      "title": "狄仁杰之狼人劫",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/7973a52f6e6287b46df6b0ec5a061d6cdf5c00a1.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年10月6日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "314848",
+      "title": "宠物系恋人",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/c01f4e0b0dff6b26cdcacf0b27c4af6cca25e47d.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年10月1日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "321633",
+      "title": "一战成名",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/479fdb8bca43113d8e969195783346e183bcd23b.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年9月27日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "314774",
+      "title": "除暴之路",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/80f8d71a73d9d01f2882145b51adc449fd50a997.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年9月24日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "307894",
+      "title": "惩罚者",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/6ca4f83add0733951722beb3eccd6d80c10fde70.png",
+      "rate": "2.3",
+      "episodes_info": "",
+      "release_info": "2026年9月15日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "302596",
+      "title": "奇门遁甲：逢凶化吉",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/148830229162af5f4c8c8870e1f7e5e8ad4df5a6.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年9月8日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "307945",
+      "title": "怪屋",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/3d4d021dce526a63d0cdec51b4f146d8842fd331.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年9月4日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "296065",
+      "title": "乌女山怪谈",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/5210ffc7e9f977366a418528957f26bfc09f5623.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年9月1日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "289497",
+      "title": "千门八将之群龙夺宝",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/843f4d3a02302cf025f5bb83eb4bf92c549b73da.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年8月25日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "323871",
+      "title": "大唐妖探",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/6f639d4aa11645af9db27489fd63d0b55c741c6b.png",
+      "rate": "5.2",
+      "episodes_info": "",
+      "release_info": "2026年8月22日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "285115",
+      "title": "速战速决",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/6cca96bed7e8cc53a1f0caa8950a704be6e0f34b.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年8月18日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "272823",
+      "title": "海墓寻龙",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/6352a1510d53875397991001a6e2f828f351fbfe.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年8月10日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "271370",
+      "title": "怒杀",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/335a981208924480e57ccf0bfa77493ef57848c1.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年8月4日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "307572",
+      "title": "年会不能停！2",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/7faa77eb26dadb9ba42e48269a24e244502c6f9e.png",
+      "rate": "8.0",
+      "episodes_info": "",
+      "release_info": "2026年8月1日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "266001",
+      "title": "烈焰狂沙",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/bb5a1f59aed5b41d9f40e05751f1365dd4a8bf62.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年7月28日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "262516",
+      "title": "血夜行",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/cbd315d7a22bbb7b2c792d7128ac4be82da5d3f4.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年7月21日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "261221",
+      "title": "功夫女足",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/6bbcc6a5139c7ea65dce7404a4723acf318445dd.png",
+      "rate": "4.4",
+      "episodes_info": "",
+      "release_info": "2026年7月11日上映",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "259002",
+      "title": "香港奇案",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/6863ea5cc10766b2482c12c92543940835e89998.png",
+      "rate": "",
+      "episodes_info": "",
+      "release_info": "2026年7月10日上映",
+      "trend_info": "",
+      "year": 2026
+    }
+  ],
+  "tv": [
+    {
+      "id": "215148",
+      "title": "长生契",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/4bc964478c1f8a75f42a64f392af7b0ace06c9a3.png",
+      "rate": "",
+      "episodes_info": "更新至合集-现代篇22",
+      "release_info": "昨天12:00更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "263283",
+      "title": "大理石厅谋杀案（又名：翠鸟谋杀案）",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/eafa8b5c6bd8b39f9245cb2d54dbe051e900c0b5.png",
+      "rate": "",
+      "episodes_info": "全6集",
+      "release_info": "10月12日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "283538",
+      "title": "消失的裂痕",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/a789090d334cb37c778ca819ddf223162f374f78.png",
+      "rate": "",
+      "episodes_info": "全6集",
+      "release_info": "9月29日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "321385",
+      "title": "薄情侯爷痴情妾",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/f9f5b818a7d7ac17e0467de36aae0a93bb0996ed.png",
+      "rate": "",
+      "episodes_info": "全80集",
+      "release_info": "9月28日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "321384",
+      "title": "新英雄本色",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/4e1619f051bb68cd7c44d460ddea4a69ebe425df.png",
+      "rate": "",
+      "episodes_info": "全60集",
+      "release_info": "9月28日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "321383",
+      "title": "强迫沉沦",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/b287d863ee7350063e0dddc05ccebe17ff62a8f8.jpg",
+      "rate": "",
+      "episodes_info": "全72集",
+      "release_info": "9月28日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "321381",
+      "title": "琉璃钟，琥珀浓",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/bafe2d2f59baa87887ea5c925fadd2de245a2d7b.png",
+      "rate": "",
+      "episodes_info": "全90集",
+      "release_info": "9月28日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "314760",
+      "title": "黑岛监狱",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/68cbd674d46eba9486ce2dc0a4602896f0b39def.png",
+      "rate": "",
+      "episodes_info": "全16集",
+      "release_info": "9月26日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "312618",
+      "title": "临时的天堂",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/0d288bc857ec7f5f5e95a6601f78aba7fce9f6a6.jpg",
+      "rate": "",
+      "episodes_info": "全63集",
+      "release_info": "9月18日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "312522",
+      "title": "饲养夜色",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/519f12c0b497de9b62bb759e5706009e02fc1f12.png",
+      "rate": "",
+      "episodes_info": "全86集",
+      "release_info": "9月18日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "312394",
+      "title": "宫墙许良人",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/2ff94e1606e6d1b48cb2233efd610cea41bd6855.jpg",
+      "rate": "",
+      "episodes_info": "全67集",
+      "release_info": "9月18日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "312393",
+      "title": "自由天堂",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/69b66d841c6d45b63d60897aacfff173fb6ee519.png",
+      "rate": "",
+      "episodes_info": "全67集",
+      "release_info": "9月18日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "312371",
+      "title": "三秒预见你",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/4d51aae614d8f8b06f17f3ec0f87e07411f51183.png",
+      "rate": "",
+      "episodes_info": "全60集",
+      "release_info": "9月17日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "312286",
+      "title": "白夜危情",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/fb31c97b941e298a7df8229075e70e13a2ab1c19.jpg",
+      "rate": "",
+      "episodes_info": "全67集",
+      "release_info": "9月17日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "266798",
+      "title": "致英格兰",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/652783b04ecd0386eabf8c95991f31bbb2576904.png",
+      "rate": "",
+      "episodes_info": "全4集",
+      "release_info": "9月13日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "284320",
+      "title": "能有多大事",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/a3daada8913ea4e2ce5bfa0d48e22387cd102166.png",
+      "rate": "",
+      "episodes_info": "更新至第30集",
+      "release_info": "8月30日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "261497",
+      "title": "暗影蜘蛛侠（彩色版）",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/b9cb8325ab4e8bbc7a2aa5b4d04021e6be163293.png",
+      "rate": "8.7",
+      "episodes_info": "全8集",
+      "release_info": "8月29日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "291690",
+      "title": "暗影蜘蛛侠（黑白版）",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/b9cb8325ab4e8bbc7a2aa5b4d04021e6be163293.png",
+      "rate": "9.1",
+      "episodes_info": "全8集",
+      "release_info": "8月29日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "137157",
+      "title": "嬉游",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/296a9808a784fcca5b100688b09d972ad1e84e0c.png",
+      "rate": "8.2",
+      "episodes_info": "全12集",
+      "release_info": "8月7日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "256924",
+      "title": "拳锋",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/acd57fe567c11206fe06ca7f82288796630806e5.png",
+      "rate": "",
+      "episodes_info": "全10集",
+      "release_info": "8月7日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "182971",
+      "title": "星际孕夫指南",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/2191ddbc0df37e41b387817d0cf482b892e94500.png",
+      "rate": "8.4",
+      "episodes_info": "全16集",
+      "release_info": "8月7日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "148580",
+      "title": "特工古德曼",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/25a982242fbd36a6703e76bdacd34d03d2a4dc56.png",
+      "rate": "",
+      "episodes_info": "全12集",
+      "release_info": "8月6日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "157324",
+      "title": "昭阳公主",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/2acd6f3cef39b972efa89b1483e962d85fa7e203.png",
+      "rate": "",
+      "episodes_info": "全18集",
+      "release_info": "8月6日更新",
+      "trend_info": "",
+      "year": 2026
+    },
+    {
+      "id": "253431",
+      "title": "种墨园",
+      "cover": "https://i0.hdslb.com/bfs/bangumi/image/5d345a7fe0893bc42249d3d0d73636678985d1e8.jpg",
+      "rate": "",
+      "episodes_info": "全34集",
+      "release_info": "7月19日更新",
+      "trend_info": "",
+      "year": 2026
+    }
+  ],
+  "hot": {
+    "movie": [
+      {
+        "id": "142986",
+        "title": "飞驰人生3",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/e7298372c5bb4021213bad1b455fd9b7077466be.png",
+        "rate": "9.5",
+        "episodes_info": "",
+        "release_info": "2026年2月17日上映",
+        "trend_info": "3198.5万次播放",
+        "year": 2026
+      },
+      {
+        "id": "142984",
+        "title": "镖人：风起大漠",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/1aeb185857a5a025cabfe81ae4478497b592b957.png",
+        "rate": "7.5",
+        "episodes_info": "",
+        "release_info": "2026年2月17日上映",
+        "trend_info": "1892.8万次播放",
+        "year": 2026
+      },
+      {
+        "id": "213047",
+        "title": "河狸变身计划 ",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/808f22660cdc4b74ef7a4a810d485277da0aac40.png",
+        "rate": "4.4",
+        "episodes_info": "",
+        "release_info": "2026年3月6日上映",
+        "trend_info": "1704.7万次播放",
+        "year": 2026
+      },
+      {
+        "id": "142988",
+        "title": "熊出没·年年有熊",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/609d3d89fb3d194535699daef8e4cc0ee20ab493.png",
+        "rate": "8.3",
+        "episodes_info": "",
+        "release_info": "2026年2月17日上映",
+        "trend_info": "1286.7万次播放",
+        "year": 2026
+      },
+      {
+        "id": "211802",
+        "title": "挽救计划",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/45999bd27c8107ba45da1ad7a114122e60a88991.png",
+        "rate": "9.8",
+        "episodes_info": "",
+        "release_info": "2026年3月20日上映",
+        "trend_info": "1234.9万次播放",
+        "year": 2026
+      },
+      {
+        "id": "231879",
+        "title": "给阿嬷的情书",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/5c3d651d7f80346436fe5adec53b1901a7304e7b.png",
+        "rate": "9.8",
+        "episodes_info": "",
+        "release_info": "2026年4月30日上映",
+        "trend_info": "1092万次播放",
+        "year": 2026
+      },
+      {
+        "id": "214726",
+        "title": "扫恶",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/67d4f3db9809b424c73ce5404b67a0a45e24b566.png",
+        "rate": "",
+        "episodes_info": "",
+        "release_info": "2026年3月20日上映",
+        "trend_info": "994.2万次播放",
+        "year": 2026
+      },
+      {
+        "id": "213048",
+        "title": "超级马力欧银河大电影 ",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/206bf0d7d21d0725ffd4c7e386ef6cc30159379a.png",
+        "rate": "9.0",
+        "episodes_info": "",
+        "release_info": "2026年4月1日上映",
+        "trend_info": "949.9万次播放",
+        "year": 2026
+      },
+      {
+        "id": "142990",
+        "title": "惊蛰无声",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/53940e686a687138f63331878552b3695624bfc4.png",
+        "rate": "",
+        "episodes_info": "",
+        "release_info": "2026年2月17日上映",
+        "trend_info": "801.6万次播放",
+        "year": 2026
+      },
+      {
+        "id": "231450",
+        "title": "寒战1994",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/31f50e9ede10784cbdf244dcefd18497f2cec280.png",
+        "rate": "8.5",
+        "episodes_info": "",
+        "release_info": "2026年5月1日上映",
+        "trend_info": "769.1万次播放",
+        "year": 2026
+      },
+      {
+        "id": "261221",
+        "title": "功夫女足",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/6bbcc6a5139c7ea65dce7404a4723acf318445dd.png",
+        "rate": "4.4",
+        "episodes_info": "",
+        "release_info": "2026年7月11日上映",
+        "trend_info": "764.2万次播放",
+        "year": 2026
+      },
+      {
+        "id": "307572",
+        "title": "年会不能停！2",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/7faa77eb26dadb9ba42e48269a24e244502c6f9e.png",
+        "rate": "8.0",
+        "episodes_info": "",
+        "release_info": "2026年8月1日上映",
+        "trend_info": "654万次播放",
+        "year": 2026
+      },
+      {
+        "id": "245771",
+        "title": "火遮眼",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/43a78e16178bf84252c59ffe30a6ed7f30ba6f94.png",
+        "rate": "8.0",
+        "episodes_info": "",
+        "release_info": "2026年6月11日上映",
+        "trend_info": "585.5万次播放",
+        "year": 2026
+      },
+      {
+        "id": "231527",
+        "title": "消失的人",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/0c86233d8681e13a777a03436a488d8aad37abd4.png",
+        "rate": "7.4",
+        "episodes_info": "",
+        "release_info": "2026年5月1日上映",
+        "trend_info": "451.8万次播放",
+        "year": 2026
+      },
+      {
+        "id": "219409",
+        "title": "我，许可",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/c5e3296adbf2739cbdb251fa99e4f3bc1ec44fba.png",
+        "rate": "6.8",
+        "episodes_info": "",
+        "release_info": "2026年4月3日上映",
+        "trend_info": "414.1万次播放",
+        "year": 2026
+      },
+      {
+        "id": "226373",
+        "title": "迈克尔·杰克逊：巨星之路",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/783c4f369dc4ec459e4496cba276e95b541de7c1.png",
+        "rate": "9.6",
+        "episodes_info": "",
+        "release_info": "2026年4月24日上映",
+        "trend_info": "402万次播放",
+        "year": 2026
+      },
+      {
+        "id": "231462",
+        "title": "10间敢死队",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/10af74b19171ce8dff044d170688bb5db61822e3.png",
+        "rate": "9.5",
+        "episodes_info": "",
+        "release_info": "2026年5月1日上映",
+        "trend_info": "359.5万次播放",
+        "year": 2026
+      },
+      {
+        "id": "134754",
+        "title": "爆水管",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/d0304f97fcf2f146925684ac03cf01c18fc04f49.png",
+        "rate": "8.5",
+        "episodes_info": "",
+        "release_info": "2026年1月23日上映",
+        "trend_info": "342万次播放",
+        "year": 2026
+      },
+      {
+        "id": "132358",
+        "title": "我的朋友安德烈",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/883d88b9c01626130c5930d5b35f5b9995d3ffd3.png",
+        "rate": "9.2",
+        "episodes_info": "",
+        "release_info": "2026年1月17日上映",
+        "trend_info": "339.4万次播放",
+        "year": 2026
+      },
+      {
+        "id": "218526",
+        "title": "蜘蛛侠：崭新之日",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/9954badce3067b8a4e54f941e5bcb0a91bed0072.png",
+        "rate": "",
+        "episodes_info": "",
+        "release_info": "2026年7月29日上映",
+        "trend_info": "337.7万次播放",
+        "year": 2026
+      },
+      {
+        "id": "134757",
+        "title": "重返寂静岭",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/8d1f71a2ac76f0c15d203c9511a6081ebf0e3cbe.png",
+        "rate": "4.3",
+        "episodes_info": "",
+        "release_info": "2026年1月23日上映",
+        "trend_info": "322.6万次播放",
+        "year": 2026
+      },
+      {
+        "id": "89309",
+        "title": "星河入梦",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/01071dbe83ba07644add83c36f6919d28f5eb834.png",
+        "rate": "8.3",
+        "episodes_info": "",
+        "release_info": "2026年2月17日上映",
+        "trend_info": "319.7万次播放",
+        "year": 2026
+      },
+      {
+        "id": "143976",
+        "title": "Apple 新春大片《碰见你》",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/232d18512b783432939aa43edd153772c295bf66.png",
+        "rate": "",
+        "episodes_info": "",
+        "release_info": "2026年1月30日上映",
+        "trend_info": "310.6万次播放",
+        "year": 2026
+      }
+    ],
+    "tv": [
+      {
+        "id": "137163",
+        "title": "九号秘事之黑帷背后",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/394c0c35c623c447cd068cedae8cfa9742734eea.png",
+        "rate": "",
+        "episodes_info": "全7集",
+        "release_info": "160.4万追剧",
+        "trend_info": "160.4万追剧",
+        "year": 2026
+      },
+      {
+        "id": "157324",
+        "title": "昭阳公主",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/2acd6f3cef39b972efa89b1483e962d85fa7e203.png",
+        "rate": "",
+        "episodes_info": "全18集",
+        "release_info": "147.6万追剧",
+        "trend_info": "147.6万追剧",
+        "year": 2026
+      },
+      {
+        "id": "134633",
+        "title": "心间错",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/1a22118c2189eabc1304f5374cfe2d2982f7d344.png",
+        "rate": "9.0",
+        "episodes_info": "全22集",
+        "release_info": "140万追剧",
+        "trend_info": "140万追剧",
+        "year": 2026
+      },
+      {
+        "id": "256924",
+        "title": "拳锋",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/acd57fe567c11206fe06ca7f82288796630806e5.png",
+        "rate": "",
+        "episodes_info": "全10集",
+        "release_info": "31.2万追剧",
+        "trend_info": "31.2万追剧",
+        "year": 2026
+      },
+      {
+        "id": "182971",
+        "title": "星际孕夫指南",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/2191ddbc0df37e41b387817d0cf482b892e94500.png",
+        "rate": "8.4",
+        "episodes_info": "全16集",
+        "release_info": "30.5万追剧",
+        "trend_info": "30.5万追剧",
+        "year": 2026
+      },
+      {
+        "id": "131844",
+        "title": "我的时光激动了",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/5c11f63539bdd560e25a2ee6d01eaf4e99f7d546.png",
+        "rate": "9.0",
+        "episodes_info": "全12集",
+        "release_info": "30万追剧",
+        "trend_info": "30万追剧",
+        "year": 2026
+      },
+      {
+        "id": "137157",
+        "title": "嬉游",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/296a9808a784fcca5b100688b09d972ad1e84e0c.png",
+        "rate": "8.2",
+        "episodes_info": "全12集",
+        "release_info": "28.5万追剧",
+        "trend_info": "28.5万追剧",
+        "year": 2026
+      },
+      {
+        "id": "148580",
+        "title": "特工古德曼",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/25a982242fbd36a6703e76bdacd34d03d2a4dc56.png",
+        "rate": "",
+        "episodes_info": "全12集",
+        "release_info": "27.2万追剧",
+        "trend_info": "27.2万追剧",
+        "year": 2026
+      },
+      {
+        "id": "261497",
+        "title": "暗影蜘蛛侠（彩色版）",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/b9cb8325ab4e8bbc7a2aa5b4d04021e6be163293.png",
+        "rate": "8.7",
+        "episodes_info": "全8集",
+        "release_info": "8.8万追剧",
+        "trend_info": "8.8万追剧",
+        "year": 2026
+      },
+      {
+        "id": "263283",
+        "title": "大理石厅谋杀案（又名：翠鸟谋杀案）",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/eafa8b5c6bd8b39f9245cb2d54dbe051e900c0b5.png",
+        "rate": "",
+        "episodes_info": "全6集",
+        "release_info": "8.3万追剧",
+        "trend_info": "8.3万追剧",
+        "year": 2026
+      },
+      {
+        "id": "215148",
+        "title": "长生契",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/4bc964478c1f8a75f42a64f392af7b0ace06c9a3.png",
+        "rate": "",
+        "episodes_info": "更新至合集-现代篇22",
+        "release_info": "6.4万追剧",
+        "trend_info": "6.4万追剧",
+        "year": 2026
+      },
+      {
+        "id": "291690",
+        "title": "暗影蜘蛛侠（黑白版）",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/b9cb8325ab4e8bbc7a2aa5b4d04021e6be163293.png",
+        "rate": "9.1",
+        "episodes_info": "全8集",
+        "release_info": "3.1万追剧",
+        "trend_info": "3.1万追剧",
+        "year": 2026
+      },
+      {
+        "id": "233575",
+        "title": "极速营救",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/c0b43f2d0fcfcd104872259e1653b37b4fb157cf.png",
+        "rate": "",
+        "episodes_info": "全24集",
+        "release_info": "2.4万追剧",
+        "trend_info": "2.4万追剧",
+        "year": 2026
+      },
+      {
+        "id": "204361",
+        "title": "百万人推理",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/9f9cfec442627e2ce6184f2264fd8da01a667ac5.png",
+        "rate": "",
+        "episodes_info": "全8集",
+        "release_info": "2万追剧",
+        "trend_info": "2万追剧",
+        "year": 2026
+      },
+      {
+        "id": "283538",
+        "title": "消失的裂痕",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/a789090d334cb37c778ca819ddf223162f374f78.png",
+        "rate": "",
+        "episodes_info": "全6集",
+        "release_info": "1.1万追剧",
+        "trend_info": "1.1万追剧",
+        "year": 2026
+      },
+      {
+        "id": "221523",
+        "title": "战旗如画",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/b3bb1d54b9f6b8bfc7b059bfa85e89055d1dc09f.jpg",
+        "rate": "",
+        "episodes_info": "全33集",
+        "release_info": "8024追剧",
+        "trend_info": "8024追剧",
+        "year": 2026
+      },
+      {
+        "id": "213558",
+        "title": "动物园",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/17759ead9be5807d7153258c0a36da374267c3a7.png",
+        "rate": "",
+        "episodes_info": "全10集",
+        "release_info": "6385追剧",
+        "trend_info": "6385追剧",
+        "year": 2026
+      },
+      {
+        "id": "253431",
+        "title": "种墨园",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/5d345a7fe0893bc42249d3d0d73636678985d1e8.jpg",
+        "rate": "",
+        "episodes_info": "全34集",
+        "release_info": "4275追剧",
+        "trend_info": "4275追剧",
+        "year": 2026
+      },
+      {
+        "id": "314760",
+        "title": "黑岛监狱",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/68cbd674d46eba9486ce2dc0a4602896f0b39def.png",
+        "rate": "",
+        "episodes_info": "全16集",
+        "release_info": "2829追剧",
+        "trend_info": "2829追剧",
+        "year": 2026
+      },
+      {
+        "id": "239916",
+        "title": "塬上风云",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/3a1557b32e2e1ed874bb72644610ef6ffadbcc83.png",
+        "rate": "",
+        "episodes_info": "更新至第24集",
+        "release_info": "2015追剧",
+        "trend_info": "2015追剧",
+        "year": 2026
+      },
+      {
+        "id": "284320",
+        "title": "能有多大事",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/a3daada8913ea4e2ce5bfa0d48e22387cd102166.png",
+        "rate": "",
+        "episodes_info": "更新至第30集",
+        "release_info": "1378追剧",
+        "trend_info": "1378追剧",
+        "year": 2026
+      },
+      {
+        "id": "240842",
+        "title": "太行谣",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/f8ba4fccefc6d041451329815fb1c0e18e6814fd.png",
+        "rate": "",
+        "episodes_info": "全24集",
+        "release_info": "859追剧",
+        "trend_info": "859追剧",
+        "year": 2026
+      },
+      {
+        "id": "266798",
+        "title": "致英格兰",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/652783b04ecd0386eabf8c95991f31bbb2576904.png",
+        "rate": "",
+        "episodes_info": "全4集",
+        "release_info": "378追剧",
+        "trend_info": "378追剧",
+        "year": 2026
+      },
+      {
+        "id": "157270",
+        "title": "况青天传奇",
+        "cover": "https://i0.hdslb.com/bfs/bangumi/image/c5eb4f98d5dc612b28f4cb73b060004a6332dbac.png",
+        "rate": "",
+        "episodes_info": "更新至第8集",
+        "release_info": "364追剧",
+        "trend_info": "364追剧",
+        "year": 2026
+      }
+    ]
+  }
+}
