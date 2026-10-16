@@ -72,7 +72,7 @@ test('hourly scheduled refresh updates the snapshot while source probes retain t
  try{
   globalThis.fetch=async()=>{upstreamCalls++;return Response.json({code:0,data:{list:[]}})};
   await worker.scheduled({scheduledTime:Date.parse('2026-10-16T01:15:00Z'),cron:'15 * * * *'},env);
-  assert.equal(upstreamCalls,4);assert.ok(sql.some(x=>x.startsWith('INSERT INTO discovery_snapshots')));assert.ok(sql.every(x=>!x.includes('video_sources')));
+  assert.equal(upstreamCalls,4);assert.ok(sql.some(x=>x.startsWith('INSERT INTO discovery_snapshots')));assert.ok(sql.every(x=>!/^UPDATE video_sources/.test(x)));
   sql.length=0;await worker.scheduled({scheduledTime:Date.parse('2026-10-16T06:15:00Z'),cron:'15 * * * *'},env);
   assert.ok(sql.some(x=>x.includes('video_sources')));
  }finally{globalThis.fetch=original}

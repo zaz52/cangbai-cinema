@@ -5,6 +5,19 @@ import {discover} from '../src/discovery.js';
 const source={id:'owned',name:'已授权片源',url:'https://owned.example.org/vod'};
 const movie=(id,title,extra={})=>({vod_id:id,vod_name:title,vod_year:'2026',type_name:'剧情片',vod_pic:'https://posters.example.org/'+id+'.jpg',vod_time:'2026-10-15 12:00:00',...extra});
 
+test('four category families retain real genres, regions and safe banners within the free subrequest budget',async()=>{
+ const original=globalThis.fetch,requests=[];
+ try{
+  const names=['剧情片','动作片','喜剧片','爱情片','科幻片','恐怖片','国产剧','欧美剧','日本剧','韩国剧','大陆综艺','日韩综艺','国产动漫','日韩动漫'];
+  globalThis.fetch=async input=>{const url=new URL(input);requests.push(url);return Response.json(url.searchParams.get('ac')==='list'?{class:names.map((type_name,i)=>({type_id:i+1,type_name})),list:[]}:{list:[movie(1,'动作电影',{vod_class:'动作,冒险',vod_area:'中国大陆',vod_pic_slide:'https://posters.example.org/banner.jpg'}),movie(2,'连载动漫',{type_name:'国产动漫',vod_class:'动画',vod_area:'中国大陆'}),movie(3,'音乐综艺',{type_name:'大陆综艺',vod_area:'中国大陆',vod_pic_slide:'https://localhost/private.jpg'})]})};
+  const snapshot=await discoverCMS({VOD_SOURCES:JSON.stringify([source])},2026,'2026-10-16');
+  assert.ok(requests.length<=12);const ids=requests.slice(1).map(u=>u.searchParams.get('t'));for(const id of ['7','11','13'])assert.ok(ids.includes(id));
+  assert.equal(snapshot.movie[0].genres,'动作,冒险');assert.equal(snapshot.anime[0].area,'中国大陆');assert.equal(snapshot.variety[0].backdrop,'');
+  const {normalizeDiscovery}=await import('../src/discovery.js');const result=normalizeDiscovery({...snapshot,year:2026});
+  assert.deepEqual(result.results.map(x=>x.kind),['movie','variety','anime']);assert.equal(result.results[0].backdrop,'https://posters.example.org/banner.jpg');assert.equal(result.results[0].genres,'动作,冒险');assert.ok(result.results.every(x=>!x.playable));
+ }finally{globalThis.fetch=original}
+});
+
 test('CMS discovery resolves real category IDs, filters years and upcoming entries, and preserves safe cover URLs',async()=>{
  const original=globalThis.fetch,requests=[];
  try{

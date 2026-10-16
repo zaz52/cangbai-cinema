@@ -13,8 +13,8 @@ export function discoveryIndexURL(kind,year,hot=false){
  return url;
 }
 function normalizeGroups(snapshot,hot=false){
- const groups={movie:[],tv:[]},year=Number(snapshot.year)||null;
- for(const kind of ['movie','tv']){
+ const groups={movie:[],tv:[],variety:[],anime:[]},year=Number(snapshot.year)||null;
+ for(const kind of Object.keys(groups)){
   const seen=new Set(),items=hot?snapshot.hot?.[kind]:snapshot[kind];
   for(const item of (Array.isArray(items)?items:[]).slice(0,48)){
    const id=String(item?.id||''),title=cleanText(item?.title,100);let image;
@@ -24,12 +24,13 @@ function normalizeGroups(snapshot,hot=false){
    if(year&&Number(item.year)!==year)continue;
    seen.add((item.providerId||'')+id);const rate=Number.parseFloat(item.rate);
    if(!cms&&!image.pathname.includes('@'))image.pathname+='@400w_600h_1c.webp';
-   groups[kind].push({id:`discover:${kind}:${cms?item.providerId+':':''}${id}`,title,image:image.href,kind,year,type:kind==='movie'?'年度新片':'年度新剧',rating:rate>0&&rate<=10?rate:null,episodesInfo:cleanText(item.episodes_info,50),releaseInfo:cleanText(item.release_info,60),trendInfo:cleanText(item.trend_info,50),source:cms?cleanText(item.providerName,60):'哔哩哔哩年度影视资料',sourceUrl:cms?'':SOURCE_URL+'bangumi/play/ss'+id,discovery:true,sourceCount:0});
-   if(groups[kind].length>=12)break;
+   const backdrop=validSourceURL(item.backdrop)?String(item.backdrop):'';
+   groups[kind].push({id:`discover:${kind}:${cms?item.providerId+':':''}${id}`,title,image:image.href,backdrop,genres:cleanText(item.genres,120),area:cleanText(item.area,60),category:cleanText(item.category,40),kind,year,type:({movie:'年度新片',tv:'年度新剧',variety:'年度综艺',anime:'年度动漫'})[kind],rating:rate>0&&rate<=10?rate:null,episodesInfo:cleanText(item.episodes_info,50),releaseInfo:cleanText(item.release_info,60),trendInfo:cleanText(item.trend_info,50),source:cms?cleanText(item.providerName,60):'哔哩哔哩年度影视资料',sourceUrl:cms?'':SOURCE_URL+'bangumi/play/ss'+id,discovery:true,sourceCount:0});
+   if(groups[kind].length>=(hot?12:48))break;
   }
  }
  const results=[];
- for(let i=0;i<Math.max(groups.movie.length,groups.tv.length);i++){if(groups.movie[i])results.push(groups.movie[i]);if(groups.tv[i])results.push(groups.tv[i])}
+ for(let i=0;i<Math.max(...Object.values(groups).map(x=>x.length));i++){for(const kind of Object.keys(groups))if(groups[kind][i])results.push(groups[kind][i])}
  return results;
 }
 export function normalizeDiscovery(snapshot){
@@ -56,11 +57,11 @@ async function saveSnapshot(env,snapshot){
  try{await env.DB.prepare('INSERT INTO discovery_snapshots(year,payload,updated_at) VALUES(?,?,?) ON CONFLICT(year) DO UPDATE SET payload=excluded.payload,updated_at=excluded.updated_at').bind(snapshot.year,JSON.stringify(snapshot),snapshot.updatedAt).run()}catch{}
 }
 export async function discover(env,origin,{now=Date.now(),force=false}={}){
- const {year,today}=discoveryCalendar(now),cache=globalThis.caches?.default,key=new Request(new URL(`/__cache/discover-v5/${year}`,origin));
+ const {year,today}=discoveryCalendar(now),cache=globalThis.caches?.default,key=new Request(new URL(`/__cache/discover-v6/${year}`,origin));
  if(cache&&!force){try{const hit=await cache.match(key);if(hit)return await hit.json()}catch{}}
  const remember=async(result,ttl)=>{if(cache){try{await cache.put(key,new Response(JSON.stringify(result),{headers:{'content-type':'application/json','cache-control':`public,max-age=${ttl}`}}))}catch{}}return result};
  const stored=await readSnapshot(env,year),age=stored?Number(now)-Date.parse(stored.updatedAt):Infinity;
- if(!force&&age>=0&&age<REFRESH_MS)return remember({...normalizeDiscovery(stored),stale:false},Math.max(1,Math.floor((REFRESH_MS-age)/1000)));
+ if(!force&&stored?.schemaVersion===2&&age>=0&&age<REFRESH_MS)return remember({...normalizeDiscovery(stored),stale:false},Math.max(1,Math.floor((REFRESH_MS-age)/1000)));
  let backup=stored;
  const fallback=async()=>{
   if(!backup){try{const response=await env.ASSETS.fetch(new Request(new URL('/data/popular.json',origin)));const data=JSON.parse(await readText(response,250000));if(Number(data.year)===year)backup=data}catch{}}
@@ -69,8 +70,9 @@ export async function discover(env,origin,{now=Date.now(),force=false}={}){
  const sections=[['movie',false],['tv',false],['movie',true],['tv',true]];
  const settled=await Promise.allSettled(sections.map(([kind,hot])=>fetchGroup(kind,year,today,hot)));
  let cms=null;
- if(settled.some(x=>x.status==='rejected')){try{cms=await discoverCMS(env,year,today)}catch{}}
- const snapshot={year,updatedAt:new Date(Number(now)).toISOString(),movie:[],tv:[],hot:{movie:[],tv:[]}};let stale=false;
+ try{cms=await discoverCMS(env,year,today)}catch{}
+ const snapshot={schemaVersion:2,year,updatedAt:new Date(Number(now)).toISOString(),movie:[],tv:[],variety:[],anime:[],hot:{movie:[],tv:[],variety:[],anime:[]}};let stale=false;
+ for(const kind of ['variety','anime']){const old=cms?.[kind]?.length?cms:await fallback();snapshot[kind]=old?.[kind]||[];snapshot.hot[kind]=old?.hot?.[kind]||[];if(cms?.[kind]?.length)snapshot.sourceKind='cms'}
  for(let i=0;i<sections.length;i++){
   const [kind,hot]=sections[i];let items;
   if(settled[i].status==='fulfilled')items=settled[i].value;
