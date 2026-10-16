@@ -2,6 +2,7 @@ import {readText} from './http.js';
 import {cleanText} from './providers.js';
 import {discoverCMS} from './cms-discovery.js';
 import {validSourceURL} from './tvbox.js';
+import {loadBannerArt,matchBannerArt} from './banner-art.js';
 const SOURCE_URL='https://www.bilibili.com/',REFRESH_MS=60*60*1000;
 export function discoveryCalendar(now=Date.now()){
  const today=new Date(Number(now)+8*60*60*1000).toISOString().slice(0,10);
@@ -35,7 +36,7 @@ function normalizeGroups(snapshot,hot=false){
 }
 export function normalizeDiscovery(snapshot){
  const updatedAt=snapshot.updatedAt||null,updated=Date.parse(updatedAt);
- return {results:normalizeGroups(snapshot),hotResults:normalizeGroups(snapshot,true),year:Number(snapshot.year)||null,updatedAt,nextRefreshAt:Number.isFinite(updated)?new Date(updated+REFRESH_MS).toISOString():null,refreshMinutes:60,source:snapshot.sourceKind==='cms'?'已接入影视源的年度更新':'哔哩哔哩年度影视资料',sourceKind:snapshot.sourceKind||'bilibili',sourceUrl:snapshot.sourceKind==='cms'?'':SOURCE_URL};
+ return {results:matchBannerArt(normalizeGroups(snapshot),snapshot.bannerArt,snapshot.year),hotResults:matchBannerArt(normalizeGroups(snapshot,true),snapshot.bannerArt,snapshot.year),bannerSync:snapshot.bannerSync||'pending',year:Number(snapshot.year)||null,updatedAt,nextRefreshAt:Number.isFinite(updated)?new Date(updated+REFRESH_MS).toISOString():null,refreshMinutes:60,source:snapshot.sourceKind==='cms'?'已接入影视源的年度更新':'哔哩哔哩年度影视资料',sourceKind:snapshot.sourceKind||'bilibili',sourceUrl:snapshot.sourceKind==='cms'?'':SOURCE_URL};
 }
 async function fetchGroup(kind,year,today,hot){
  const response=await fetch(discoveryIndexURL(kind,year,hot),{headers:{accept:'application/json','user-agent':'Mozilla/5.0 (compatible; SongbaiCinema/0.6)','referer':SOURCE_URL},redirect:'manual',signal:AbortSignal.timeout(5000)});
@@ -57,21 +58,23 @@ async function saveSnapshot(env,snapshot){
  try{await env.DB.prepare('INSERT INTO discovery_snapshots(year,payload,updated_at) VALUES(?,?,?) ON CONFLICT(year) DO UPDATE SET payload=excluded.payload,updated_at=excluded.updated_at').bind(snapshot.year,JSON.stringify(snapshot),snapshot.updatedAt).run()}catch{}
 }
 export async function discover(env,origin,{now=Date.now(),force=false}={}){
- const {year,today}=discoveryCalendar(now),cache=globalThis.caches?.default,key=new Request(new URL(`/__cache/discover-v6/${year}`,origin));
+ const {year,today}=discoveryCalendar(now),cache=globalThis.caches?.default,key=new Request(new URL(`/__cache/discover-v7/${year}`,origin));
  if(cache&&!force){try{const hit=await cache.match(key);if(hit)return await hit.json()}catch{}}
  const remember=async(result,ttl)=>{if(cache){try{await cache.put(key,new Response(JSON.stringify(result),{headers:{'content-type':'application/json','cache-control':`public,max-age=${ttl}`}}))}catch{}}return result};
  const stored=await readSnapshot(env,year),age=stored?Number(now)-Date.parse(stored.updatedAt):Infinity;
- if(!force&&stored?.schemaVersion===2&&age>=0&&age<REFRESH_MS)return remember({...normalizeDiscovery(stored),stale:false},Math.max(1,Math.floor((REFRESH_MS-age)/1000)));
+ if(!force&&stored?.schemaVersion===3&&age>=0&&age<REFRESH_MS)return remember({...normalizeDiscovery(stored),stale:false},Math.max(1,Math.floor((REFRESH_MS-age)/1000)));
  let backup=stored;
  const fallback=async()=>{
   if(!backup){try{const response=await env.ASSETS.fetch(new Request(new URL('/data/popular.json',origin)));const data=JSON.parse(await readText(response,250000));if(Number(data.year)===year)backup=data}catch{}}
   return backup||{year,movie:[],tv:[],hot:{movie:[],tv:[]},updatedAt:null};
  };
  const sections=[['movie',false],['tv',false],['movie',true],['tv',true]];
+ const artwork=loadBannerArt(env,origin,stored?.bannerArt);
  const settled=await Promise.allSettled(sections.map(([kind,hot])=>fetchGroup(kind,year,today,hot)));
  let cms=null;
  try{cms=await discoverCMS(env,year,today)}catch{}
- const snapshot={schemaVersion:2,year,updatedAt:new Date(Number(now)).toISOString(),movie:[],tv:[],variety:[],anime:[],hot:{movie:[],tv:[],variety:[],anime:[]}};let stale=false;
+ const banners=await artwork;
+ const snapshot={schemaVersion:3,bannerArt:banners.items,bannerSync:banners.mode,year,updatedAt:new Date(Number(now)).toISOString(),movie:[],tv:[],variety:[],anime:[],hot:{movie:[],tv:[],variety:[],anime:[]}};let stale=false;
  for(const kind of ['variety','anime']){const old=cms?.[kind]?.length?cms:await fallback();snapshot[kind]=old?.[kind]||[];snapshot.hot[kind]=old?.hot?.[kind]||[];if(cms?.[kind]?.length)snapshot.sourceKind='cms'}
  for(let i=0;i<sections.length;i++){
   const [kind,hot]=sections[i];let items;

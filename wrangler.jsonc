@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "triggers": {
     "crons": [
-      "15 * * * *"
+      "15 * * * *",
+      "30 */6 * * *"
     ]
   },
   "assets": {

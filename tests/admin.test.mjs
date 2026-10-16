@@ -79,7 +79,7 @@ test('scheduled probe stores statuses and never auto-enables a source',async()=>
  const create=await worker.fetch(request('/api/admin/import/confirm','POST',{rightsConfirmed:true,sources:[{name:'Documentary API',url:'https://docs.example.org/api.php/provide/vod'}]},cookie),env);
  assert.equal(create.status,200);
  const old=globalThis.fetch;globalThis.fetch=async()=>new Response(JSON.stringify({list:[]}),{status:200});
- try{await worker.scheduled({cron:'15 */6 * * *'},env,{});}finally{globalThis.fetch=old}
+ try{await worker.scheduled({cron:'30 */6 * * *'},env,{});}finally{globalThis.fetch=old}
  const rs=(await DB.prepare('SELECT last_status,enabled FROM video_sources').all()).results;
  assert.equal(rs[0].last_status,'healthy');assert.equal(rs[0].enabled,0);
 });

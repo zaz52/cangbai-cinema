@@ -50,10 +50,10 @@ test('D1 snapshots survive requests, refresh after an hour, and provide the last
  const original=globalThis.fetch;let requests=0,generation=1;
  try{
   globalThis.fetch=async()=>{requests++;return Response.json({code:0,data:{list:[{season_id:generation,title:'自动上新'+generation,cover:entry('1','').cover}]}})};
-  const first=await discover(env,'https://cinema.example.org',{now});assert.equal(requests,4);assert.equal(first.results[0].title,'自动上新1');assert.equal(first.nextRefreshAt,new Date(now+3600000).toISOString());
-  const cached=await discover(env,'https://cinema.example.org',{now:now+1800000});assert.equal(requests,4);assert.equal(cached.updatedAt,first.updatedAt);
-  generation=2;const fresh=await discover(env,'https://cinema.example.org',{now:now+3660000});assert.equal(requests,8);assert.equal(fresh.results[0].title,'自动上新2');
-  generation=3;const forced=await discover(env,'https://cinema.example.org',{now:now+3720000,force:true});assert.equal(requests,12);assert.equal(forced.results[0].title,'自动上新3');
+  const first=await discover(env,'https://cinema.example.org',{now});assert.equal(requests,5);assert.equal(first.results[0].title,'自动上新1');assert.equal(first.nextRefreshAt,new Date(now+3600000).toISOString());
+  const cached=await discover(env,'https://cinema.example.org',{now:now+1800000});assert.equal(requests,5);assert.equal(cached.updatedAt,first.updatedAt);
+  generation=2;const fresh=await discover(env,'https://cinema.example.org',{now:now+3660000});assert.equal(requests,10);assert.equal(fresh.results[0].title,'自动上新2');
+  generation=3;const forced=await discover(env,'https://cinema.example.org',{now:now+3720000,force:true});assert.equal(requests,15);assert.equal(forced.results[0].title,'自动上新3');
   globalThis.fetch=async()=>{throw Error('upstream offline')};const stale=await discover(env,'https://cinema.example.org',{now:now+8000000});assert.equal(stale.stale,true);assert.equal(stale.results[0].title,'自动上新3');assert.equal(stale.updatedAt,forced.updatedAt);
  }finally{globalThis.fetch=original;db.close()}
 });
@@ -66,14 +66,14 @@ test('old-year fallback data cannot be relabeled as a new-year release',async()=
   assert.equal(result.year,2027);assert.equal(result.results.length,0);assert.equal(result.stale,true);assert.equal(result.updatedAt,null);
  }finally{globalThis.fetch=original}
 });
-test('hourly scheduled refresh updates the snapshot while source probes retain their six-hour interval',async()=>{
+test('hourly metadata refresh and six-hour source probes use separate cron invocations',async()=>{
  const original=globalThis.fetch,sql=[];let upstreamCalls=0;
  const env={DB:{prepare(query){sql.push(query);return {bind(){return {first:async()=>null,run:async()=>({})}},all:async()=>({results:[]})}}}};
  try{
   globalThis.fetch=async()=>{upstreamCalls++;return Response.json({code:0,data:{list:[]}})};
   await worker.scheduled({scheduledTime:Date.parse('2026-10-16T01:15:00Z'),cron:'15 * * * *'},env);
-  assert.equal(upstreamCalls,4);assert.ok(sql.some(x=>x.startsWith('INSERT INTO discovery_snapshots')));assert.ok(sql.every(x=>!/^UPDATE video_sources/.test(x)));
-  sql.length=0;await worker.scheduled({scheduledTime:Date.parse('2026-10-16T06:15:00Z'),cron:'15 * * * *'},env);
-  assert.ok(sql.some(x=>x.includes('video_sources')));
+  assert.equal(upstreamCalls,5);assert.ok(sql.some(x=>x.startsWith('INSERT INTO discovery_snapshots')));assert.ok(sql.every(x=>!/^UPDATE video_sources/.test(x)));
+  sql.length=0;upstreamCalls=0;await worker.scheduled({scheduledTime:Date.parse('2026-10-16T06:30:00Z'),cron:'30 */6 * * *'},env);
+  assert.equal(upstreamCalls,0);assert.ok(sql.some(x=>x.includes('video_sources')));assert.ok(sql.every(x=>!x.includes('discovery_snapshots')));
  }finally{globalThis.fetch=original}
 });

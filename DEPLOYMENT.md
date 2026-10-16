@@ -2,6 +2,22 @@
 
 验收日期：2026-10-16，Asia/Shanghai。原始 v0.6 压缩包保持原样，修复版源码在本目录。
 
+## 2026-10-16 15:53 PC 高清横幅接入与上线
+
+用户原话：“pc端为啥不是横屏的海报”“你不能自己做吗”。
+
+- PC 首屏采用全宽横版宣传图，优先轮播具有横图资料的当年作品；当前匹配《伟大的长征》2260×744 和《美人余2026》1800×750。两张图片均来自参考站公开宣传图资料，保留来源链接；搜索和播放继续使用既有后台源。
+- 新增 `src/banner-art.js`，限定读取参考站首页中的宣传图和详情路径，按电影/剧集类型、当年及规范化片名匹配。允许当前年份后缀，续集与不同类型保持独立。片单同步时每小时更新横图资料，D1 快照保存最近结果，结构版本更新为 3。
+- 通过 `scripts/refresh-banners.mjs` 原样保存 6 张通过尺寸检测的宣传图备份至 `public/assets/banners/`；`public/data/banners.json` 记录来源、原始分辨率、字节数及对应文件。相同图片优先从本站静态资源加载，上游异常时使用备份和已有记录；首屏显示“宣传图来源”链接。
+- 轮播优先选择可用横图，单张图片网络失败后退出当前会话候选并切换到另一张，保留封面回退。首页分类、题材与地区筛选、每小时片单更新、移动端、搜索、后台及播放器继续沿用。
+- 片单与横图同步 Cron 为 `15 * * * *`；源测活独立为 `30 */6 * * *`（UTC），每次最多 12 个源。任务拆分符合免费套餐的调用预算，相关上限参见 [Workers 文档](https://developers.cloudflare.com/workers/platform/limits/) 与 [D1 文档](https://developers.cloudflare.com/d1/platform/limits/)。
+- 涉及首页脚本与样式、`src/discovery.js`、`src/index.js`、`wrangler.jsonc`、新增横图模块/备份/维护脚本、相关测试和 README。本次更新未改变后台凭据及影视源配置。
+- 代码验证：67 项代码测试通过；13 项浏览器流程通过，覆盖全宽图片与标题匹配、单张失败回退、原有海报异常、年度刷新、分类、搜索、后台 CRUD 和播放换源。Cron 拆分后复跑 67 项代码测试通过，Worker dry-run 构建完成。证据为 `reports/wide-banners-unit.txt` 和 `reports/browser.json`。
+- 线上真实验证：`bannerSync=live`，Cloudflare 成功获取实时横图资料；两张横图均加载本站备份，1920px 屏幕实测元素 1920×595，采用 `cover`、布局标记为 `landscape`，片名与图片匹配。7 种屏幕宽度（1920、1440、1200、1024、768、390、320px）均无横向溢出；四行分类正常，动作电影筛出 13 部，搜索《水饺皇后》返回 6 项，页面脚本错误为 0。
+- 证据为 `reports/wide-banners-live.json`；两张电脑截图为 `reports/wide-banners-live-slide-0.png`、`reports/wide-banners-live-slide-1.png`，手机截图为 `reports/wide-banners-live-mobile.png`。首轮检测等待图片尺寸头信息后过早读取布局标记，调整验证脚本等待图片完整加载与 onload 处理结束后通过。
+- 当前验证覆盖即时线上同步；自然小时周期未等待，定时入口与到期更新由受控测试覆盖。当前年度片单中有 2 部匹配备份横图；其他备份保留待对应作品进入片单后匹配，横幅数量随实际资料更新。
+- 已发布到 `https://weiyi.indevs.in/`，Cloudflare 版本 `440a9f4f-31b3-4d5b-8a44-ac1cf7772a3e`。前一版本 `150aa668-8249-411a-ba42-edaaacd47f7d` 可用于回滚。代码同步至公开仓库 `zaz52/cangbai-cinema` 的 `main` 分支。
+
 ## 2026-10-16 15:33 首页海报清晰度与细分类
 
 需求摘要：用户对比自身首页与饭搭子影视截图，反馈首屏海报模糊，要求参考其首页并补充下方分类。
@@ -206,7 +222,7 @@
 | 数据绑定 | `DB` |
 | 静态资源绑定 | `ASSETS` |
 | 域名接入 | `weiyi.indevs.in/*` Workers 路由 |
-| Cron | `15 * * * *`，UTC，每小时同步年度片单，每 6 小时探活 |
+| Cron | `15 * * * *` 每小时同步年度片单与横图；`30 */6 * * *` 每 6 小时探活，均为 UTC |
 | 浏览器视频 | 直接访问媒体原站，支持 MP4/WebM/Ogg/HLS |
 
 四次迁移均已在线上 D1 执行：`0001_sources.sql`、`0002_tvbox_feeds.sql`、`0003_security_events.sql`、`0004_discovery_snapshots.sql`。源、配置检测结果、会话、登录限流、测活日志和年度片单快照保存在 D1；收藏保存在用户浏览器。

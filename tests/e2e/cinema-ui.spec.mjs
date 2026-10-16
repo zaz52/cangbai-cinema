@@ -63,3 +63,15 @@ test('homepage genre and region links filter actual movie, TV, variety and anime
  await page.locator('.category-links [data-facet="恐怖"]').click();await expect(page.locator('.empty-state')).toContainText('当前分类暂无作品');
  await page.locator('[data-discover-facet=""]').click();await expect(page.locator('.discovery-card')).toHaveCount(2);
 });
+
+test('PC hero chooses matching full-width landscape banners and skips a failed banner without repeating it',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.route('**/api/discover',async route=>{const r=await route.fetch(),data=await r.json();data.results=data.results.map((x,i)=>i<2?{...x,backdrop:i===0?'/assets/banners/dd800ce13733910a.png':'/assets/banners/ea6c61b6670ff893.webp',backdropSourceUrl:'https://fdzys.com/'}:x);await route.fulfill({json:data})});
+ await page.setViewportSize({width:1920,height:1000});await page.goto('/');
+ await expect(page.locator('.hero-choice')).toHaveCount(2);await expect(page.locator('.hero')).toHaveAttribute('data-image-layout','landscape');
+ expect(await page.locator('.hero-featured').evaluate(img=>img.naturalWidth>=1800&&Math.abs(img.width-innerWidth)<2&&getComputedStyle(img).objectFit==='cover')).toBe(true);
+ await page.locator('.hero-choice').nth(1).click();await expect(page.locator('.hero-featured')).toHaveJSProperty('naturalWidth',1800);
+ await page.screenshot({path:'reports/wide-banners-local-desktop.png'});
+ await page.route('**/assets/banners/dd800ce13733910a.png',route=>route.fulfill({status:404,body:'missing'}));await page.reload();
+ await expect(page.locator('.hero-choice')).toHaveCount(1);await expect(page.locator('.hero-featured')).toHaveJSProperty('naturalWidth',1800);await expect(page.locator('.hero')).toHaveAttribute('data-image-layout','landscape');
+});

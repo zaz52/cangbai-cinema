@@ -60,8 +60,8 @@ export default {
  async fetch(request,env){try{const path=new URL(request.url).pathname;if(path.startsWith('/api/'))return await api(request,env);return env.ASSETS.fetch(request)}catch{return json({error:'服务暂不可用，请检查数据库迁移与配置'},503)}},
  async scheduled(controller,env){
   if(!env.DB)return;
-  await discover(env,'https://weiyi.indevs.in',{force:true});
-  if(controller.scheduledTime&&new Date(controller.scheduledTime).getUTCHours()%6!==0)return;
+  if(controller.cron==='15 * * * *'){await discover(env,'https://weiyi.indevs.in',{force:true});return}
+  if(controller.cron&&controller.cron!=='30 */6 * * *')return;
   const rows=await env.DB.prepare("SELECT id,name,url FROM video_sources WHERE rights_confirmed=1 ORDER BY CASE WHEN last_checked_at IS NULL THEN 0 ELSE 1 END, last_checked_at ASC LIMIT 12").all();
   await Promise.all((rows.results||[]).map(async row=>{
    const result=await probeSource(row);

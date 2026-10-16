@@ -1,0 +1,72 @@
+{
+  "source": "https://fdzys.com/",
+  "updatedAt": "2026-10-16T07:44:26.238Z",
+  "items": [
+    {
+      "title": "伟大的长征",
+      "kind": "tv",
+      "image": "/assets/banners/dd800ce13733910a.png",
+      "sourceImage": "https://fdzys.com/static/images/20261010/8732d67b20bb3c6124d0aa409469608b.png",
+      "sourceUrl": "https://fdzys.com/tv/wei-da-de-chang-zheng",
+      "width": 2260,
+      "height": 744,
+      "extension": "png",
+      "bytes": 2130539
+    },
+    {
+      "title": "美人余",
+      "kind": "tv",
+      "image": "/assets/banners/ea6c61b6670ff893.webp",
+      "sourceImage": "https://fdzys.com/static/images/20261009/28b064cbe1f714db4f01109250b361b1.webp",
+      "sourceUrl": "https://fdzys.com/tv/meirenyu",
+      "width": 1800,
+      "height": 750,
+      "extension": "webp",
+      "bytes": 32784
+    },
+    {
+      "title": "兰香如故",
+      "kind": "tv",
+      "image": "/assets/banners/1017b83dc895b7c5.webp",
+      "sourceImage": "https://fdzys.com/static/images/20260914/9f320c23c9a781d449832a2dc3f9dc44.webp",
+      "sourceUrl": "https://fdzys.com/tv/lan-xiang-ru-gu",
+      "width": 1800,
+      "height": 750,
+      "extension": "webp",
+      "bytes": 650116
+    },
+    {
+      "title": "一瓯春",
+      "kind": "tv",
+      "image": "/assets/banners/1083578b749a6279.jpg",
+      "sourceImage": "https://fdzys.com/static/images/20260917/78f93e09e9f889125135209e5ecbd85c.jpg",
+      "sourceUrl": "https://fdzys.com/tv/yiouchun",
+      "width": 1920,
+      "height": 1080,
+      "extension": "jpg",
+      "bytes": 310204
+    },
+    {
+      "title": "深渊无间",
+      "kind": "tv",
+      "image": "/assets/banners/3bf5ddfffdd1e289.jpg",
+      "sourceImage": "https://fdzys.com/static/images/20260910/5237816e1daac4460e870b178bb47130.jpeg",
+      "sourceUrl": "https://fdzys.com/tv/shen-yuan-wu-jian",
+      "width": 2260,
+      "height": 744,
+      "extension": "jpg",
+      "bytes": 1231606
+    },
+    {
+      "title": "欢迎来龙餐馆",
+      "kind": "movie",
+      "image": "/assets/banners/dfa080f296e663de.jpg",
+      "sourceImage": "https://fdzys.com/static/images/20260827/a069c434875fb25976bd2aeebe0cd4aa.jpg",
+      "sourceUrl": "https://fdzys.com/movie/huan-ying-lai-long-can-guan",
+      "width": 1920,
+      "height": 1080,
+      "extension": "jpg",
+      "bytes": 433970
+    }
+  ]
+}
