@@ -2,6 +2,16 @@
 
 验收日期：2026-10-16，Asia/Shanghai。原始 v0.6 压缩包保持原样，修复版源码在本目录。
 
+## 2026-10-16 16:28 右上角头像替换
+
+用户原话：“最右边的cb换成头像图二”。
+
+- 将首页右上角 CB 文字替换为用户提供的照片，保存为 `public/assets/avatar.jpg`。照片字节保持原样；通过圆形容器和 CSS 缩放展示头像，保留原有点击进入影视源管理后台的链接及无障碍名称。
+- 涉及 `public/index.html`、`public/cinema.css`、头像图片和本记录。
+- 静态 diff 检查通过。线上图片返回 HTTP 200，SHA-256 与原图一致；原图为 1080×1080，头像容器为 33×33、圆角 50%。1920、1440、1024、390px 宽度均无横向溢出，页面脚本错误为 0；点击头像到达后台，Cloudflare 将 `/admin.html` 规范化为 `/admin`。
+- 证据为 `reports/avatar-live.json` 和 `reports/avatar-live-header.png`。本轮为图片和展示样式调整，使用线上浏览器检查完成验收。
+- 已发布至 `https://weiyi.indevs.in/`，Cloudflare 版本 `96f38468-f277-4f09-bbe7-b723f373e607`。源码同步至公开仓库 `zaz52/cangbai-cinema` 的 `main` 分支。
+
 ## 2026-10-16 15:53 PC 高清横幅接入与上线
 
 用户原话：“pc端为啥不是横屏的海报”“你不能自己做吗”。

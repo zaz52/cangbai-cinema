@@ -54,7 +54,8 @@ body { background: var(--bg); }
 .search-field:focus-within { border-color: #4388ff; background: #202634; }
 .search-field input { font-size: 12px; }
 .search-field kbd { display: none; }
-.profile { background: #2b3b58; border: 1px solid #4b6897; }
+.profile { flex: none; overflow: hidden; background: #2b3b58; border: 1px solid #4b6897; }
+.profile img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.6); transform-origin: 50% 32%; }
 .circle-btn { color: #9b9fa7; }
 .content-wrap { max-width: 1496px; padding: 0 28px; }
 .hero { height: 442px; min-height: 0; background: #171b24; }
