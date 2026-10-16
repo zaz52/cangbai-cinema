@@ -94,6 +94,8 @@ npm run deploy
 
 环境：Windows PowerShell、macOS 或 Linux；Node.js 24+；Git 可选；你的域名已接入 Cloudflare。
 
+首次复现时，先在 `wrangler.jsonc` 中将 `routes` 设置为 `[]`、保留 `workers_dev: true`，首发使用自己的 `workers.dev` 地址。仓库内的域名和数据库 ID 属于作者的部署实例；下文创建 D1 后将实际返回的 ID 写入配置，随后绑定你自己在 Cloudflare 管理的域名。Worker `name` 也可先改为自己账号下的项目名。
+
 ### 1. 获取源码并安装依赖
 
 ```bash
@@ -119,7 +121,7 @@ Cloudflare 输出中会有 `database_id`，例如 `11111111-2222-3333-4444-55555
 npm run db:set -- 这里替换为你的真实database_id
 ```
 
-或手动把 `wrangler.jsonc` 中的 `REPLACE_WITH_D1_DATABASE_ID` 换成实际 ID。
+或手动将 `wrangler.jsonc` 的 `d1_databases[0].database_id` 改为实际 ID。
 
 ### 3. 初始化数据库结构
 

@@ -2,6 +2,15 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {normalizeCMSAddress,cmsIdentity,inspectCMS} from '../src/cms-inspector.js';
 
+test('built-in licensed sample inspection resolves locally and retains unverified playback status',async()=>{
+ const original=globalThis.fetch;
+ try{
+  globalThis.fetch=async()=>{throw Error('Unexpected recursive same-zone fetch')};
+  const result=await inspectCMS({url:'https://weiyi.indevs.in/api/open-demo/vod',query:'Big Buck Bunny'});
+  assert.equal(result.search.ok,true);assert.equal(result.search.count,1);assert.equal(result.detail.ok,true);assert.ok(result.playback.directCandidates>0);assert.equal(result.playback.verified,false);
+ }finally{globalThis.fetch=original}
+});
+
 test('collector normalization upgrades HTTP/XML while preserving provider selectors',()=>{
  const result=normalizeCMSAddress('http://api.example.org/api.php/provide/vod/from/ffm3u8/at/xml/?source=7&ac=detail&ids=1&wd=old#fragment');
  assert.equal(result.url,'https://api.example.org/api.php/provide/vod/from/ffm3u8/at/json/?source=7');assert.deepEqual(result.changes,['HTTP → HTTPS','XML → JSON']);

@@ -1,6 +1,7 @@
 import {validFeedURL,validSourceURL} from './tvbox.js';
 import {cmsSearchUrl,cmsDetailUrl,parseCmsPlay,cleanText,safeQuery} from './providers.js';
 import {readText} from './http.js';
+import {isDemoAPI,demoCMS} from './open-demo.js';
 
 export function normalizeCMSAddress(value){
  const original=String(value||'').trim();
@@ -22,6 +23,7 @@ export function cmsIdentity(value){
  url.searchParams.sort();url.hash='';return url.href;
 }
 async function cmsJSON(url){
+ if(isDemoAPI(url))return demoCMS(new URL(url)).list;
  const response=await fetch(url,{redirect:'manual',signal:AbortSignal.timeout(7000),headers:{accept:'application/json'}});
  if(!response.ok){await response.body?.cancel();throw Error('HTTP '+response.status)}
  const text=await readText(response,700000);if(/^\s*(?:<\?xml|<rss\b)/i.test(text))throw Error('接口仍返回 XML，请使用上游提供的 JSON 地址');
