@@ -19,6 +19,7 @@ async function refresh(){let data=await call('/api/admin/sources');sources=data.
 function feedStatus(f){let kind=f.last_status||'pending';const labels={pending:'待检测',compatible:'可识别 JSON',unsupported:'未找到 CMS 接口',failed:'解析失败'};return `<span class="feed-status ${esc(kind)}">${labels[kind]||'待检测'}</span>`}
 function renderFeeds(){
  $('#feedCount').textContent=feeds.length;
+ if(!$('#testAllFeeds').disabled)$('#testAllFeeds').textContent=`逐个检测 ${feeds.length} 个地址`;
  $('#feedList').innerHTML=feeds.map(f=>`<article class="feed-card" data-feed-id="${esc(f.id)}"><div class="feed-card-top"><div class="feed-card-name">${esc(f.name)}</div>${feedStatus(f)}</div><div class="feed-url" title="${esc(f.url)}">${esc(f.url)}</div><div class="feed-meta">${f.last_checked_at?'最近检测：'+esc(f.last_checked_at):'尚未检测'}${f.last_candidate_count!==null&&f.last_candidate_count!==undefined?' · 候选接口 '+Number(f.last_candidate_count):''}</div>${f.last_error?`<div class="feed-error" title="${esc(f.last_error)}">${esc(f.last_error)}</div>`:''}<div class="feed-card-actions"><button class="smallbtn" data-feed-action="preview">检测并预览接口</button><a class="smallbtn feed-open" href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">查看原地址 ↗</a></div></article>`).join('')||'<p>暂无预置配置，请检查 D1 是否已运行 0002 迁移。</p>';
 }
 async function refreshFeeds(){const data=await call('/api/admin/feeds');feeds=data.feeds||[];renderFeeds()}
@@ -39,7 +40,7 @@ async function checkAllFeeds(){
  const jobs=[...feeds];let index=0,done=0,compatible=0;
  async function work(){while(index<jobs.length){const feed=jobs[index++];try{const result=await call('/api/admin/feeds/'+feed.id+'/preview',{method:'POST',data:{}});if(result.status==='compatible')compatible++}catch{}done++;b.textContent=`正在检测 ${done}/${jobs.length}`}}
  try{await Promise.all(Array.from({length:Math.min(2,jobs.length)},work));await refreshFeeds();notify(`已检查 ${done} 个地址，其中 ${compatible} 个发现可识别的 CMS 接口；未自动导入或启用`)}
- catch(e){notify(e.message,true)}finally{b.disabled=false;b.textContent='逐个检测 10 个地址'}
+ catch(e){notify(e.message,true)}finally{b.disabled=false;b.textContent=`逐个检测 ${feeds.length} 个地址`}
 }
 
 async function start(){try{const s=await call('/api/admin/session');$('#login').hidden=true;$('#setup').hidden=true;$('#dashboard').hidden=true;

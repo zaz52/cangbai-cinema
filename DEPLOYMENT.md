@@ -2,6 +2,19 @@
 
 验收日期：2026-10-16，Asia/Shanghai。原始 v0.6 压缩包保持原样，修复版源码在本目录。
 
+## 2026-10-21 00:07 TVBox 失败入口替换与备用配置核验
+
+用户原话：“这些失败的重新给我找能用的备用资源”。
+
+- 从现有 Cloudflare 后台重测 10 个配置：原哈基米入口能提取 18 项，其余 9 项返回下载失败、图片、网页、非 JSON、多仓或专用脚本配置。重新查阅公开维护仓库、原配置的子列表及站长此前提供的创享地址，逐一经生产环境预览后建立替换清单。
+- 新增 `0005_tvbox_backups.sql`，将仍使用原地址的 9 个失败记录更新为 6 套兼容配置和 3 个 jsDelivr 备用镜像。原始配置登记仍保留在 `0002` 迁移；管理员自定义 URL、已登记的重复目标和既有哈基米记录按条件保留。迁移后重置新地址的旧错误记录，并执行真实检测写回最新状态。
+- 配置来源：TVboxorg、qist、kjxhb、aliluya、玄珠公开配置、创享；镜像对应前三者中的 TVboxorg、qist、aliluya，包含重复的候选接口。原始地址、新地址及预检结果见 `reports/feed-replacement-plan.json`，失效与不兼容证据见 `reports/feed-recheck-live.json`。
+- 更新后台配置库说明与动态检测数量，说明镜像可能重复。README 补充来源、升级步骤和检测范围。涉及迁移文件、`public/admin.html`、`public/admin.js`、`tests/feeds.test.mjs`、README 和本记录。
+- 代码测试：70 项全部通过，相关浏览器流程 3 项通过，覆盖迁移后的后台操作、批量导入、真实本地搜索与播放换源、预览默认未选中。新增迁移测试覆盖仅更新原始入口、错误状态重置、幂等执行、自定义 URL 和重复目标保护。证据为 `reports/feed-backups-unit.txt` 和 `reports/browser.json`。
+- 线上真实验证：远程迁移完成；9 个替换入口和保留的哈基米均为 `compatible`。依次提取候选 17、11、13、24、18、7、15、11、24、5 项，镜像与各配置间有重复，这些数量不代表独立可播放来源。抽测 20 个备用接口，8 个搜索和详情通过并返回标准视频地址结构；其余 12 个返回 403、530、非 JSON、重定向或超时。实际视频播放和新增来源授权尚未验证。
+- 后台桌面与 390px 手机浏览正常，点击预览显示 17 个候选，接口勾选和授权确认均保持待选；页面脚本错误为 0。对比快照确认既有点播源 URL、启用状态和授权字段一致。证据见 `reports/feed-replacements-live.json`、`reports/backup-feed-live.json` 及 `reports/feed-backups-desktop.png`、`reports/feed-backups-mobile.png`。
+- 已部署至 `https://weiyi.indevs.in/`，Cloudflare 版本 `02bc3d61-490a-41b0-9fa0-566018d68591`。源码同步至公开仓库 `zaz52/cangbai-cinema` 的 `main` 分支。第三方更新会影响后续结果，可通过后台重新检测。
+
 ## 2026-10-20 23:38 隐藏搜索结果上方来源标签
 
 用户原话：“每次搜索影片的时候都会出来这个搜索来源，能不能隐藏”。

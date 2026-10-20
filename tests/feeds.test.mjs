@@ -38,6 +38,40 @@ test('feed URL validator allows legacy HTTP and unicode host but rejects private
  for(const u of ['http://127.0.0.1:3000/','http://localhost/','https://10.0.0.1/','https://host.internal/config','https://user:pass@foo.com/config','ftp://foo.com/list'])assert.equal(validFeedURL(u),false,u);
 });
 
+test('backup migration updates nine original entries, resets diagnostics and preserves configured sources',()=>{
+ const db=new DatabaseSync(':memory:');
+ try{
+  db.exec(readFileSync(new URL('../migrations/0001_sources.sql',import.meta.url),'utf8'));
+  db.exec(readFileSync(new URL('../migrations/0002_tvbox_feeds.sql',import.meta.url),'utf8'));
+  db.exec("UPDATE tvbox_feeds SET last_status='failed',last_error='old failure',last_candidate_count=0,last_checked_at='2020-01-01'");
+  db.exec("UPDATE tvbox_feeds SET last_status='compatible',last_candidate_count=18 WHERE id='hajimi'");
+  db.exec("INSERT INTO video_sources(id,name,url,enabled,rights_confirmed) VALUES('owned-source','Owned','https://owned.example.org/vod',1,1)");
+  const before=db.prepare('SELECT * FROM video_sources').all(),kept=db.prepare("SELECT * FROM tvbox_feeds WHERE id='hajimi'").get();
+  const migration=readFileSync(new URL('../migrations/0005_tvbox_backups.sql',import.meta.url),'utf8');db.exec(migration);
+  const rows=db.prepare('SELECT * FROM tvbox_feeds').all(),changed=rows.filter(x=>x.id!=='hajimi');
+  assert.equal(rows.length,10);assert.equal(changed.length,9);
+  assert.ok(changed.every(x=>x.url.startsWith('https:')&&validFeedURL(x.url)&&x.last_status==='pending'&&x.last_error===null&&x.last_checked_at===null&&x.last_candidate_count===null));
+  assert.equal(changed.filter(x=>x.url.includes('cdn.jsdelivr.net')).length,3);
+  assert.deepEqual(db.prepare("SELECT * FROM tvbox_feeds WHERE id='hajimi'").get(),kept);
+  assert.deepEqual(db.prepare('SELECT * FROM video_sources').all(),before);
+  db.exec(migration);assert.deepEqual(db.prepare('SELECT * FROM tvbox_feeds').all(),rows);
+ }finally{db.close()}
+});
+
+test('backup migration preserves administrator-edited URLs and skips an already registered replacement',()=>{
+ const db=new DatabaseSync(':memory:');
+ try{
+  db.exec(readFileSync(new URL('../migrations/0002_tvbox_feeds.sql',import.meta.url),'utf8'));
+  db.exec("UPDATE tvbox_feeds SET url='https://owned.example.org/custom.json',last_status='compatible',last_candidate_count=2 WHERE id='sun'");
+  db.exec("INSERT INTO tvbox_feeds(id,name,url) VALUES('existing-qist','Existing','https://raw.githubusercontent.com/qist/tvbox/master/jsm.json')");
+  const custom=db.prepare("SELECT * FROM tvbox_feeds WHERE id='sun'").get(),duplicate=db.prepare("SELECT * FROM tvbox_feeds WHERE id='easydc'").get();
+  db.exec(readFileSync(new URL('../migrations/0005_tvbox_backups.sql',import.meta.url),'utf8'));
+  assert.deepEqual(db.prepare("SELECT * FROM tvbox_feeds WHERE id='sun'").get(),custom);
+  assert.deepEqual(db.prepare("SELECT * FROM tvbox_feeds WHERE id='easydc'").get(),duplicate);
+  assert.equal(db.prepare('SELECT COUNT(*) AS count FROM tvbox_feeds').get().count,11);
+ }finally{db.close()}
+});
+
 test('JSON comments and trailing commas parsed safely, Spider excluded',()=>{
  const s=`{
  // comment

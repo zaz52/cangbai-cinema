@@ -16,7 +16,7 @@
 <div class="toolbar"><div><h2>影视源列表</h2><p>先测试接口，再启用。单源失败不会中断其他源搜索。</p></div><div class="actions"><button id="viewLogs" class="button ghost">错误与测活日志</button><button id="refresh" class="button ghost">刷新列表</button><button id="openInspect" class="button outline">识别采集接口</button><button id="openImport" class="button outline">导入 TVBox</button><button id="openAdd" class="button primary">＋ 添加 Apple CMS</button></div></div>
 <div class="source-panel"><div class="table-head"><span>名称 / 接口</span><span>测活结果</span><span>已启用</span><span>操作</span></div><div id="sourceList"></div><div id="empty" class="empty" hidden><div class="empty-icon">⌘</div><h3>尚未配置影视源</h3><p>添加 Apple CMS JSON 接口，或导入 TVBox 配置后筛选可用来源。</p></div></div>
 <section class="feed-section" aria-label="预置 TVBox 配置库">
-  <div class="toolbar"><div><div class="eyebrow">TVBOX CONFIG ENTRIES</div><h2>TVBox 配置库 <span class="feed-num" id="feedCount">10</span></h2><p>你提供的 10 个配置地址已预置。可逐个检测、预览兼容接口，再选择导入到上面的点播源列表。</p></div><div class="actions"><button id="refreshFeeds" class="button ghost">刷新配置列表</button><button id="testAllFeeds" class="button outline">逐个检测 10 个地址</button></div></div>
+  <div class="toolbar"><div><div class="eyebrow">TVBOX CONFIG ENTRIES</div><h2>TVBox 配置库 <span class="feed-num" id="feedCount">10</span></h2><p>已登记兼容配置和备用镜像。可逐个检测、预览兼容接口，再选择导入到上面的点播源列表；镜像与对应直连配置可能包含相同接口。</p></div><div class="actions"><button id="refreshFeeds" class="button ghost">刷新配置列表</button><button id="testAllFeeds" class="button outline">逐个检测配置地址</button></div></div>
   <div id="feedList" class="feed-grid" aria-live="polite"></div>
   <p class="feed-note">配置地址 ≠ 搜索 API ≠ 可播放影片。扩展名为 JPG/PNG/WebP 的配置，只有响应内容是 JSON 才能直接解析。多仓、Spider、加密规则需对应专用引擎，本站不会执行第三方代码。含 HTTP 的旧配置地址仅用于管理员识别，不能直接成为 HTTPS 播放源。</p>
 </section>
