@@ -94,7 +94,6 @@ function stateCards(){
  return `<div class="poster-grid">${list.map(card).join('')}</div>`;
 }
 function sectionHead(title,sub,eyebrow='POPULAR CINEMA'){return `<div class="section-toolbar"><div><div class="section-topline">${eyebrow}</div><h2 class="section-title">${title}<span style="color:var(--accent)">.</span></h2><p class="section-subtitle">${sub}</p></div></div>`}
-function providerStatus(){if(!state.sourceStatus.length)return '';return `<div class="providers-status">${state.sourceStatus.map(x=>`<span class="status-chip ${x.ok?'':'fail'}" title="${esc(x.error||'检索完成')}"><b></b>${esc(x.name)} · ${x.ok?x.results+'条':'请求失败'}</span>`).join('')}</div>`}
 function catalogCards(){
  if(state.catalogLoading)return `<div class="empty-state"><h3>正在同步 awesome-zhuiju-free …</h3></div>`;
  if(state.catalogError)return `<div class="empty-state"><h3>目录更新暂时不可用</h3><p>${esc(state.catalogError)}</p><button class="reset-btn" data-action="catalog-retry">重试</button></div>`;
@@ -121,7 +120,7 @@ function renderArchive(isHome){
  const subtitle=state.nav==='我的收藏'?'收藏保存在当前浏览器中。':'搜索已连接的视频数据接口，合并同名影片。源失效时可尝试同集其他可用线路。';
  const count=state.loading?'正在并行查询…':state.error?'搜索异常':state.nav==='我的收藏'?`收藏 ${Object.keys(state.saved).length} 部`:`本页找到 ${state.items.length} 部影片`;
  const suggest=state.nav==='我的收藏'?'':`<div class="search-suggestions"><span>继续发现：</span><button data-browse-kind="movie">热门电影</button><button data-browse-kind="tv">热播剧集</button></div>`;
- return `<section class="${isHome?'top-picks':'result-page'} cinema-feed">${sectionHead(heading,subtitle,'MULTI-SOURCE SEARCH')}<div class="archive-status"><span class="online-dot"></span>${esc(count)}<span class="archive-caption"> · 已接入片源聚合检索</span></div>${providerStatus()}${suggest}${stateCards()}${state.nav!=='我的收藏'&&!state.loading&&state.items.length>=18?`<div class="page-ctrl"><button class="btn btn-glass" data-action="prev" ${state.page===1?'disabled':''}>上一页</button><span>第 ${state.page} 页</span><button class="btn btn-glass" data-action="next">下一页 ${icon('arrow')}</button></div>`:''}</section>`;
+ return `<section class="${isHome?'top-picks':'result-page'} cinema-feed">${sectionHead(heading,subtitle,'MULTI-SOURCE SEARCH')}<div class="archive-status"><span class="online-dot"></span>${esc(count)}<span class="archive-caption"> · 已接入片源聚合检索</span></div>${suggest}${stateCards()}${state.nav!=='我的收藏'&&!state.loading&&state.items.length>=18?`<div class="page-ctrl"><button class="btn btn-glass" data-action="prev" ${state.page===1?'disabled':''}>上一页</button><span>第 ${state.page} 页</span><button class="btn btn-glass" data-action="next">下一页 ${icon('arrow')}</button></div>`:''}</section>`;
 }
 function renderSpotlights(){
  return `<section class="story-strip" aria-label="热门影视推荐">${[['movie','新片速递','随今年上映片单自动更新'],['tv','热剧推荐','跟上今年的人气故事']].map(([kind,label,description])=>{

@@ -2,6 +2,16 @@
 
 验收日期：2026-10-16，Asia/Shanghai。原始 v0.6 压缩包保持原样，修复版源码在本目录。
 
+## 2026-10-20 23:38 隐藏搜索结果上方来源标签
+
+用户原话：“每次搜索影片的时候都会出来这个搜索来源，能不能隐藏”。
+
+- 移除搜索结果顶部逐源名称、返回条数和失败状态的标签渲染，结果数量下方直接显示继续发现入口与影片卡片。涉及 `public/app.js` 和本记录。
+- 代码验证：JavaScript 语法检查、Git diff 检查通过；现有真实本地 Worker/D1 浏览器流程 1 项通过，覆盖后台操作、同名聚合、媒体解码及有限换源，记录见 `reports/browser.json`。
+- 线上真实验证：连续搜索《水饺皇后》和《流浪地球》，分别返回 5、10 部影片；两次响应均有 12 项源检测状态，前台来源标签数量均为 0。影片详情可打开，页面脚本错误为 0。1440px 和 390px 宽度均无横向溢出。
+- 线上静态脚本 SHA-256 与当前文件一致，健康检查返回 HTTP 200。证据见 `reports/hidden-search-sources-live.json`，截图见 `reports/hidden-search-sources-1440.png` 和 `reports/hidden-search-sources-390.png`。
+- 已发布至 `https://weiyi.indevs.in/`，Cloudflare 版本 `cf0e4cee-e18b-42dc-8564-1ace87db7f27`。源码同步至公开仓库 `zaz52/cangbai-cinema` 的 `main` 分支。
+
 ## 2026-10-16 20:14 图文教程核验与开放样片检测修复
 
 需求摘要：将搭站过程整理成面向新手的 X 长文，每一步附截图。
