@@ -479,3 +479,9 @@ body { background: var(--bg); }
 .fav.active, .fav:hover { background: #e8b84b; color: #2a1600; }
 .quality { background: #b3202cee; color: #ffe9b8; }
 .footer-noncommercial a, .about-legal-link { color: #e8b84b; }
+
+/* 播放器清晰度选择（2026-10-26）：HLS 多档时手动切换，MP4/原生 HLS 时置灰说明 */
+.quality-wrap { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.quality-select { height: 34px; border: 1px solid var(--accent); border-radius: 8px; background: var(--panel2); color: var(--ink); padding: 0 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.quality-select:disabled { opacity: .6; cursor: default; }
+.quality-current { font-size: 11px; color: var(--accent); min-width: 0; }

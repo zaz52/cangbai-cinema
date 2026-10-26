@@ -157,27 +157,31 @@ function freeHls(){if(playerWatchdog){clearTimeout(playerWatchdog);playerWatchdo
 function playCandidate(idx,auto=false){
  const m=state.modal;if(!m||m.type!=='play')return;const v=m.candidates[idx];if(!v)return toast('没有更多可尝试的线路');
  freeHls();document.querySelector('.real-player video')?.pause();m.index=idx;m.tried.add(idx);let failed=false;
- showModal(`<div class="dialog player-dialog" role="dialog" aria-modal="true" aria-label="${esc(m.detail.title)}播放"><button class="dialog-close" data-action="close" aria-label="关闭">${icon('x')}</button><div class="player-body real-player"><video controls playsinline preload="metadata" poster="${esc(safeUrl(m.detail.image))}" aria-label="${esc(m.detail.title)}视频播放器"></video></div><div class="player-actions"><div><strong>${esc(m.detail.title)}</strong><small>${esc(v.name)} · ${esc(v.line||'媒体原站')} · 第 ${idx+1}/${m.candidates.length} 个候选${auto?' · 自动换源':''}</small></div><button class="btn btn-glass" data-action="next-line">${icon('arrow')} 换下一条线路</button><button class="btn btn-glass" data-action="back-detail" data-id="${esc(m.id)}">返回详情</button></div><div class="video-disclaimer">视频由第三方媒体服务直连提供。仅在相同剧集的候选视频间尝试换源；无法播放请核对权限、地区与格式。<a href="./copyright.html">版权与侵权投诉</a></div></div>`);
+ showModal(`<div class="dialog player-dialog" role="dialog" aria-modal="true" aria-label="${esc(m.detail.title)}播放"><button class="dialog-close" data-action="close" aria-label="关闭">${icon('x')}</button><div class="player-body real-player"><video controls playsinline preload="metadata" poster="${esc(safeUrl(m.detail.image))}" aria-label="${esc(m.detail.title)}视频播放器"></video></div><div class="player-actions"><div><strong>${esc(m.detail.title)}</strong><small>${esc(v.name)} · ${esc(v.line||'媒体原站')} · 第 ${idx+1}/${m.candidates.length} 个候选${auto?' · 自动换源':''}</small></div><button class="btn btn-glass" data-action="seek-back">‹ 10秒</button><button class="btn btn-glass" data-action="seek-forward">10秒 ›</button><label class="quality-wrap">清晰度 <select class="quality-select" data-action="quality" aria-label="选择清晰度"><option value="-1">自动</option></select><span class="quality-current"></span></label><button class="btn btn-glass" data-action="next-line">${icon('arrow')} 换下一条线路</button><button class="btn btn-glass" data-action="back-detail" data-id="${esc(m.id)}">返回详情</button></div><div class="video-disclaimer">视频由第三方媒体服务直连提供。仅在相同剧集的候选视频间尝试换源；无法播放请核对权限、地区与格式。<a href="./copyright.html">版权与侵权投诉</a></div></div>`);
  const el=document.querySelector('.real-player video');if(!el)return;
+ el.setAttribute('tabindex','0');el.focus();
  const fail=()=>{if(failed||state.modal!==m||m.type!=='play'||m.index!==idx)return;failed=true;freeHls();el.pause();const next=m.candidates.findIndex((_,i)=>!m.tried.has(i));if(next>=0){toast(`当前线路播放失败，自动尝试第 ${next+1} 条`);playCandidate(next,true)}else toast('全部候选线路均无法播放；请检查视频权限或稍后重试')};
  el.addEventListener('error',fail,{once:true});
  const clearWatch=()=>{if(playerWatchdog){clearTimeout(playerWatchdog);playerWatchdog=null}};
- const armWatch=()=>{clearWatch();if(!el.paused)playerWatchdog=setTimeout(fail,17000)};
+ const onTimeout=()=>{if(el.seeking){armWatch();return}fail()};
+ const armWatch=()=>{clearWatch();if(!el.paused)playerWatchdog=setTimeout(onTimeout,17000)};
  const startPlayback=()=>el.play().catch(error=>{if(error.name==='NotAllowedError'){clearWatch();toast('请点击播放器中的播放按钮')}else if(error.name!=='AbortError')fail()});
  el.addEventListener('playing',clearWatch);
+ el.addEventListener('seeked',clearWatch);
  el.addEventListener('pause',clearWatch);
  el.addEventListener('play',armWatch);
  el.addEventListener('waiting',armWatch);
  el.addEventListener('stalled',armWatch);
- playerWatchdog=setTimeout(fail,17000);
+ playerWatchdog=setTimeout(onTimeout,17000);
  const uri=safeUrl(v.url);if(!uri){fail();return}
  if(/\.m3u8(\?|#|$)/i.test(uri)){
-  if(el.canPlayType('application/vnd.apple.mpegurl')){el.src=uri;startPlayback()}
-  else if(window.Hls?.isSupported()){currentHls=new window.Hls({maxBufferLength:30,manifestLoadPolicy:{default:{maxTimeToFirstByteMs:8000,maxLoadTimeMs:10000,timeoutRetry:{maxNumRetry:0},errorRetry:{maxNumRetry:0}}}});currentHls.loadSource(uri);currentHls.attachMedia(el);currentHls.on(window.Hls.Events.MANIFEST_PARSED,startPlayback);currentHls.on(window.Hls.Events.ERROR,(_,data)=>{if(data.fatal)fail()});}
+  if(el.canPlayType('application/vnd.apple.mpegurl')){const sel=document.querySelector('.quality-select');if(sel){sel.innerHTML='<option value="-1">自动（浏览器决定）</option>';sel.disabled=true}el.src=uri;startPlayback()}
+  else if(window.Hls?.isSupported()){currentHls=new window.Hls({maxBufferLength:30,abrEwmaDefaultEstimate:5000000,abrBandWidthFactor:0.9,manifestLoadPolicy:{default:{maxTimeToFirstByteMs:8000,maxLoadTimeMs:10000,timeoutRetry:{maxNumRetry:0},errorRetry:{maxNumRetry:0}}}});currentHls.loadSource(uri);currentHls.attachMedia(el);currentHls.on(window.Hls.Events.MANIFEST_PARSED,()=>{const sel=document.querySelector('.quality-select');if(sel){const levels=currentHls.levels||[];const seenH=new Set();sel.innerHTML='<option value="-1">自动</option>'+levels.map((lv,i)=>{const h=lv.height||0;if(!h||seenH.has(h))return '';seenH.add(h);return `<option value="${i}">${h}P</option>`}).join('');sel.innerHTML=sel.innerHTML||'<option value="-1">自动</option>';const q=typeof m.qualityLevel==='number'?m.qualityLevel:-1;if(q>=0&&levels[q]){currentHls.currentLevel=q;sel.value=String(q)}else sel.value='-1'}startPlayback()});currentHls.on(window.Hls.Events.LEVEL_SWITCHED,(_,data)=>{const cur=document.querySelector('.quality-current');if(cur){const lv=(currentHls.levels||[])[data.level];cur.textContent=lv&&lv.height?('当前 '+lv.height+'P'):''}});currentHls.on(window.Hls.Events.ERROR,(_,data)=>{if(data.fatal)fail()});}
   else fail();
- }else{el.src=uri;startPlayback()}
+ }else{const sel=document.querySelector('.quality-select');if(sel){sel.innerHTML='<option value="-1">源文件（单档）</option>';sel.disabled=true}el.src=uri;startPlayback()}
 }
-function openPlayer(id,index=0){const m=state.modal?.detail;if(!m||m.id!==id)return openDetail(id);const chosen=m.videos?.[index];if(!chosen)return toast('此作品暂无直接播放地址');const same=(m.videos||[]).filter(x=>(x.episodeKey||'movie')===(chosen.episodeKey||'movie'));const seen=new Set();const candidates=[chosen,...same.filter(x=>x!==chosen)].filter(x=>{if(seen.has(x.url))return false;seen.add(x.url);return true}).slice(0,16);state.modal={id,type:'play',detail:m,candidates,index:0,tried:new Set()};playCandidate(0)}
+function hdScore(v){const t=((v.line||'')+' '+(v.name||'')+' '+(v.format||'')).toLowerCase();if(/4k|2160/.test(t))return 4;if(/蓝光|1080/.test(t))return 3;if(/高清|超清|\bhd\b|720/.test(t))return 2;return 1}
+function openPlayer(id,index=0){const m=state.modal?.detail;if(!m||m.id!==id)return openDetail(id);const chosen=m.videos?.[index];if(!chosen)return toast('此作品暂无直接播放地址');const same=(m.videos||[]).filter(x=>(x.episodeKey||'movie')===(chosen.episodeKey||'movie'));const seen=new Set();const rest=same.filter(x=>x!==chosen).sort((a,b)=>hdScore(b)-hdScore(a));const candidates=[chosen,...rest].filter(x=>{if(seen.has(x.url))return false;seen.add(x.url);return true}).slice(0,16);state.modal={id,type:'play',detail:m,candidates,index:0,tried:new Set(),qualityLevel:-1};playCandidate(0)}
 function toggleFav(id){const m=state.modal?.detail?.id===id?state.modal.detail:findMovie(id);if(!m)return;
  if(state.saved[id])delete state.saved[id];else state.saved[id]={id:m.id,title:m.title,year:m.year,image:m.image,type:m.type,sourceUrl:m.sourceUrl,description:m.description,sourceIds:m.sourceIds,discovery:m.discovery,kind:m.kind,rating:m.rating,episodesInfo:m.episodesInfo};
  try{localStorage.setItem(storageKey,JSON.stringify(state.saved))}catch{}
@@ -208,6 +212,8 @@ document.body.addEventListener('click',e=>{
  if(act==='detail')openDetail(id);
  if(act==='play')openPlayer(id,Number(b.dataset.index||0));
  if(act==='back-detail'&&state.modal?.detail){freeHls();state.modal.type='detail';showModal(detailMarkup(state.modal.detail));}
+ if(act==='seek-back'&&state.modal?.type==='play'){const el=document.querySelector('.real-player video');if(el)el.currentTime=Math.max(0,el.currentTime-10)}
+ if(act==='seek-forward'&&state.modal?.type==='play'){const el=document.querySelector('.real-player video');if(el&&isFinite(el.duration))el.currentTime=Math.min(el.duration,el.currentTime+10)}
  if(act==='next-line'&&state.modal?.type==='play'){const m=state.modal;const next=m.candidates.findIndex((_,i)=>!m.tried.has(i));if(next>=0)playCandidate(next);else toast('没有更多未尝试的线路');}
  if(act==='catalog-retry')loadCatalog();
  if(act==='fav')toggleFav(id);
@@ -218,6 +224,8 @@ document.body.addEventListener('click',e=>{
 });
 document.body.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.poster-art')){e.preventDefault();if(e.target.dataset.query)queryTo(e.target.dataset.query);else openDetail(e.target.dataset.id)}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.modal)closeModal();if(e.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)&&!state.modal){e.preventDefault();document.getElementById('globalSearch').focus()}});
+document.addEventListener('keydown',e=>{const m=state.modal;if(!m||m.type!=='play')return;const t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.tagName==='SELECT'||t.tagName==='BUTTON'||t.tagName==='A'||t.isContentEditable))return;const el=document.querySelector('.real-player video');if(!el)return;const handled=['ArrowRight','ArrowLeft','Space','KeyM','KeyF'].includes(e.code);if(!handled)return;e.preventDefault();e.stopPropagation();if(e.code==='ArrowRight'){if(isFinite(el.duration))el.currentTime=Math.min(el.duration,el.currentTime+10)}else if(e.code==='ArrowLeft'){el.currentTime=Math.max(0,el.currentTime-10)}else if(e.code==='Space'){if(el.paused)el.play().catch(()=>{});else el.pause()}else if(e.code==='KeyM'){el.muted=!el.muted}else if(e.code==='KeyF'){if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});else el.requestFullscreen?.().catch(()=>{})}},true);
+document.body.addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.action==='quality'){const m=state.modal;if(!m||m.type!=='play')return;const v=Number(t.value);m.qualityLevel=v;if(currentHls){currentHls.currentLevel=v;const cur=document.querySelector('.quality-current');if(cur)cur.textContent=v<0?'':('已选 '+t.options[t.selectedIndex].text)}}});
 const hash=decodeURIComponent(location.hash.replace(/^#\//,''));if(hash==='影视源目录')history.replaceState(null,'','#/');else if(navs.includes(hash))state.nav=hash;
 renderMain();if(state.nav==='影视源目录')loadCatalog();else loadArchive(1);
 
