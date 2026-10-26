@@ -400,3 +400,82 @@ body { background: var(--bg); }
   .discovery-filters { flex-wrap: wrap; }
   .facet-filters { margin-top: 0; }
 }
+
+/* 苍柏影院复古影院风（2026-10-26 用户定稿预览 v1 落正式站） */
+:root {
+  --bg: #160a0a;
+  --panel: #241313;
+  --panel2: #2e1a1a;
+  --muted: #c4a89a;
+  --line: #4a2c28;
+  --ink: #f7ead2;
+  --accent: #e8b84b;
+  --accentink: #2a1600;
+}
+body { background: var(--bg); }
+::selection { background: #e8b84b; color: #2a1600; }
+/* 顶部灯泡条：复古影院招牌灯 */
+.marquee-lights {
+  display: flex; justify-content: space-between; padding: 6px 18px 2px;
+  background: #1c0d0d; font-size: 14px; letter-spacing: 14px; color: #e8b84b;
+  text-shadow: 0 0 8px #e8b84b, 0 0 18px #e8b84b88;
+  animation: marquee-glow 2.4s ease-in-out infinite alternate;
+}
+@keyframes marquee-glow {
+  from { text-shadow: 0 0 6px #e8b84b88, 0 0 12px #e8b84b44; }
+  to { text-shadow: 0 0 10px #e8b84b, 0 0 24px #e8b84baa; }
+}
+.site-header { background: #160a0af2; border-bottom: 2px solid #e8b84b; }
+.brand-icon { background: linear-gradient(135deg, #e8b84b, #b3202c); }
+.brand-en { color: #e8b84b; }
+.nav-link.active { background: #b3202c; color: #ffe9b8; }
+.nav-link.active:hover { background: #c92a36; }
+.nav-link:hover { color: #fff; background: #33201f; }
+.search-field { background: #2e1a1a; border: 1px solid #4a2c28; }
+.search-field:focus-within { border-color: #e8b84b; background: #33201f; }
+/* 轮播区：左右幕布褶皱 */
+.hero { height: 540px; background: #1c0d0d; }
+.hero-image { background: linear-gradient(120deg, #3a1210, #5c1a16 60%, #1c0d0d); }
+.hero::before {
+  background: repeating-linear-gradient(90deg, #6e1420 0 26px, #4a0d16 26px 52px);
+  opacity: .28;
+}
+.hero .eyebrow { color: #ffd97a; }
+.hero .eyebrow svg { fill: #e8b84b; stroke: #e8b84b; }
+.hero-title { font-family: Georgia, 'Songti SC', serif; font-size: clamp(38px, 4.2vw, 60px); letter-spacing: 3px; }
+.hero-title-year { color: #e8dcc2; }
+.btn-primary, .hero-buttons .btn-primary {
+  background: linear-gradient(135deg, #e8b84b, #c98f1f); color: #2a1600;
+  font-weight: 800; border: 0; box-shadow: 0 8px 24px #e8b84b40;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-glass { border-color: #e8b84b88; color: #ffe9b8; }
+.hero-choice.active { border-color: #e8b84b; background: linear-gradient(90deg, #1c0d0d10, #3a2212e0); }
+.hero-choice.active small { color: #ffd97a; }
+.hero-pagination button.active { background: #e8b84b; width: 40px; }
+/* 胶片齿孔分隔：每个分区标题上方一条齿孔带 */
+.section-toolbar {
+  border-top: 10px solid #0d0505; position: relative;
+  background-image: radial-gradient(circle at 12px 50%, #e8b84b33 3px, transparent 4px);
+  background-size: 28px 10px; background-repeat: repeat-x; background-position: top;
+  padding-top: 18px;
+}
+.section-title { font-family: Georgia, 'Songti SC', serif; font-size: 30px; letter-spacing: 2px; }
+.section-topline { color: #e8b84b; letter-spacing: 4px; }
+.discovery-filter.active, .chip.selected { color: #2a1600; background: #e8b84b; border-color: #e8b84b; font-weight: 800; }
+.discovery-filter:hover, .chip:hover { color: #ffe9b8; border-color: #e8b84b; }
+.poster-card { transition: transform .25s ease, box-shadow .25s ease; }
+.poster-card:hover { transform: translateY(-6px) rotate(-.4deg); box-shadow: 0 16px 32px #00000088, 0 0 0 1px #e8b84b66; }
+.poster-card:hover .quality { opacity: 1; background: #e8b84b; color: #2a1600; }
+.poster-score { color: #e8b84b; }
+.category-heading { color: #ffe9b8; }
+.category-links button:hover { color: #e8b84b; border-color: #e8b84b66; }
+.link-more { color: #e8b84b; }
+.site-footer { border-top: 2px solid #e8b84b; }
+.footer-brand { color: #e8b84b; }
+
+/* 正式站补充：海报悬停按钮、收藏、画质标签、页脚链接一并改金色，避免残留蓝色 */
+.mini-play { background: linear-gradient(135deg, #e8b84b, #c98f1f); color: #2a1600; }
+.fav.active, .fav:hover { background: #e8b84b; color: #2a1600; }
+.quality { background: #b3202cee; color: #ffe9b8; }
+.footer-noncommercial a, .about-legal-link { color: #e8b84b; }
