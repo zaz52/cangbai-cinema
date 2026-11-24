@@ -152,7 +152,7 @@ async function openDetail(id){const movie=findMovie(id);if(!movie)return toast('
  const qs=new URLSearchParams();qs.set('ids',JSON.stringify((movie.sourceIds?.length?movie.sourceIds:[id]).slice(0,8)));const r=await fetch(`/api/detail?${qs}`);if(!r.ok)throw Error(`HTTP ${r.status}`);const data=await r.json();if(data.error)throw Error(data.detail||data.error);if(state.modal?.id!==id)return;data.id=id;data.sourceIds=movie.sourceIds;state.modal.detail=data;showModal(detailMarkup(data));
  }catch(e){if(state.modal?.id!==id)return;showModal(`<div class="dialog"><button class="dialog-close" data-action="close" aria-label="关闭">${icon('x')}</button><div class="detail-loading">详情和线路获取失败：${esc(e.message)}<div style="margin-top:24px"><button class="btn btn-glass" data-action="detail" data-id="${esc(id)}">重试</button></div></div></div>`)}
 }
-let currentHls=null;let playerWatchdog=null;
+let currentHls=null;let playerWatchdog=null;let autoNext=true;try{autoNext=localStorage.getItem('songbai-auto-next')!=='0'}catch{}
 function freeHls(){if(playerWatchdog){clearTimeout(playerWatchdog);playerWatchdog=null}if(currentHls){currentHls.destroy();currentHls=null}}
 function playCandidate(idx,auto=false){
  const m=state.modal;if(!m||m.type!=='play')return;const v=m.candidates[idx];if(!v)return toast('没有更多可尝试的线路');
@@ -161,7 +161,7 @@ function playCandidate(idx,auto=false){
  const curEp=(v.episodeKey||'movie');
  const epSel=eps.length>1?`<label class="quality-wrap">选集 <select class="player-select" data-action="episode" aria-label="选择集数">${eps.map(e=>`<option value="${esc(e.key)}"${e.key===curEp?' selected':''}>${esc(e.name)}</option>`).join('')}</select></label>`:'';
  const lineSel=m.candidates.length>1?`<label class="quality-wrap">播放源 <select class="player-select" data-action="line" aria-label="选择播放源">${m.candidates.map((c,i)=>`<option value="${i}"${i===idx?' selected':''}>${esc(c.line||c.format||('线路'+(i+1)))}</option>`).join('')}</select></label>`:'';
- const selRow=`<div class="player-selects">${epSel}${lineSel}<button class="btn btn-glass" data-action="skip-intro">跳过片头</button><button class="btn btn-glass" data-action="skip-outro">跳过片尾</button></div>`;
+ const selRow=`<div class="player-selects">${epSel}${lineSel}<button class="btn btn-glass" data-action="toggle-autonext">自动连播：${autoNext?'开':'关'}</button><button class="btn btn-glass" data-action="skip-intro">跳过片头</button><button class="btn btn-glass" data-action="skip-outro">跳过片尾</button></div>`;
  showModal(`<div class="dialog player-dialog" role="dialog" aria-modal="true" aria-label="${esc(m.detail.title)}播放"><button class="dialog-close" data-action="close" aria-label="关闭">${icon('x')}</button><div class="player-body real-player"><video controls playsinline preload="metadata" poster="${esc(safeUrl(m.detail.image))}" aria-label="${esc(m.detail.title)}视频播放器"></video></div>${selRow}<div class="player-actions"><div><strong>${esc(m.detail.title)}</strong><small>${esc(v.name)} · ${esc(v.line||'媒体原站')} · 第 ${idx+1}/${m.candidates.length} 个候选${auto?' · 自动换源':''}</small></div><button class="btn btn-glass" data-action="seek-back">‹ 10秒</button><button class="btn btn-glass" data-action="seek-forward">10秒 ›</button><label class="quality-wrap">清晰度 <select class="quality-select" data-action="quality" aria-label="选择清晰度"><option value="-1">自动</option></select><span class="quality-current"></span></label><button class="btn btn-glass" data-action="next-line">${icon('arrow')} 换下一条线路</button><button class="btn btn-glass" data-action="back-detail" data-id="${esc(m.id)}">返回详情</button></div><div class="video-disclaimer">视频由第三方媒体服务直连提供。仅在相同剧集的候选视频间尝试换源；无法播放请核对权限、地区与格式。<a href="./copyright.html">版权与侵权投诉</a></div></div>`);
  const el=document.querySelector('.real-player video');if(!el)return;
  el.setAttribute('tabindex','0');el.focus();
@@ -177,6 +177,7 @@ function playCandidate(idx,auto=false){
  el.addEventListener('play',armWatch);
  el.addEventListener('waiting',armWatch);
  el.addEventListener('stalled',armWatch);
+ el.addEventListener('ended',()=>{if(state.modal!==m||m.type!=='play')return;clearWatch();if(eps.length<=1||!autoNext)return;const nxt=eps[eps.findIndex(e=>e.key===curEp)+1];if(!nxt){toast('已经是最后一集了');return}const nIdx=(m.detail.videos||[]).findIndex(x=>(x.episodeKey||'movie')===nxt.key);if(nIdx>=0){toast('即将播放下一集：'+nxt.name);openPlayer(m.id,nIdx)}});
  playerWatchdog=setTimeout(onTimeout,17000);
  const uri=safeUrl(v.url);if(!uri){fail();return}
  if(/\.m3u8(\?|#|$)/i.test(uri)){
@@ -219,6 +220,7 @@ document.body.addEventListener('click',e=>{
  if(act==='back-detail'&&state.modal?.detail){freeHls();state.modal.type='detail';showModal(detailMarkup(state.modal.detail));}
  if(act==='seek-back'&&state.modal?.type==='play'){const el=document.querySelector('.real-player video');if(el)el.currentTime=Math.max(0,el.currentTime-10)}
  if(act==='seek-forward'&&state.modal?.type==='play'){const el=document.querySelector('.real-player video');if(el&&isFinite(el.duration))el.currentTime=Math.min(el.duration,el.currentTime+10)}
+ if(act==='toggle-autonext'&&state.modal?.type==='play'){autoNext=!autoNext;try{localStorage.setItem('songbai-auto-next',autoNext?'1':'0')}catch{};b.textContent='自动连播：'+(autoNext?'开':'关');toast(autoNext?'已开启自动连播':'已关闭自动连播')}
  if(act==='skip-intro'&&state.modal?.type==='play'){const el=document.querySelector('.real-player video');if(el){const target=isFinite(el.duration)?Math.min(90,el.duration*0.5):90;if(el.currentTime>=target)toast('已过片头');else el.currentTime=target}}
  if(act==='skip-outro'&&state.modal?.type==='play'){const el=document.querySelector('.real-player video');if(el){if(!isFinite(el.duration))toast('无法确定片尾位置');else if(el.currentTime>=el.duration-90)toast('已是片尾');else el.currentTime=Math.max(0,el.duration-90)}}
  if(act==='next-line'&&state.modal?.type==='play'){const m=state.modal;const next=m.candidates.findIndex((_,i)=>!m.tried.has(i));if(next>=0)playCandidate(next);else toast('没有更多未尝试的线路');}
